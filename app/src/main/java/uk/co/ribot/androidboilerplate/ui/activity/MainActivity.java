@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 
 import butterknife.Bind;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
 import uk.co.ribot.androidboilerplate.R;
 import uk.co.ribot.androidboilerplate.data.DataManager;
@@ -18,13 +19,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-import rx.android.app.AppObservable;
 import rx.subscriptions.CompositeSubscription;
 import uk.co.ribot.easyadapter.EasyRecyclerAdapter;
 
 public class MainActivity extends BaseActivity {
-
-    private static final String TAG = "MainActivity";
 
     private CompositeSubscription mSubscriptions;
     private EasyRecyclerAdapter<Ribot> mRecyclerAdapter;
@@ -54,7 +52,8 @@ public class MainActivity extends BaseActivity {
     }
 
     private void loadRibots() {
-        mSubscriptions.add(AppObservable.bindActivity(this, mDataManager.getRibots())
+        mSubscriptions.add(mDataManager.getRibots()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(mDataManager.getSubscribeScheduler())
                 .subscribe(new Subscriber<List<Ribot>>() {
                     @Override

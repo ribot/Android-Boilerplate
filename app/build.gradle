@@ -116,7 +116,7 @@ play {
 }
 
 dependencies {
-    final PLAY_SERVICES_VERSION = '7.5.0'
+    final PLAY_SERVICES_VERSION = '7.8.0'
     final SUPPORT_LIBRARY_VERSION = '22.2.1'
     final DAGGER_VERSION = '2.0.1'
     final DEXMAKER_VERSION = '1.2'
@@ -139,7 +139,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.squareup:otto:1.3.8'
 
-    compile 'io.reactivex:rxandroid:0.25.0'
+    compile 'io.reactivex:rxandroid:1.0.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.jakewharton.timber:timber:3.1.0'
     compile 'uk.co.ribot:easyadapter:1.5.0@aar'
