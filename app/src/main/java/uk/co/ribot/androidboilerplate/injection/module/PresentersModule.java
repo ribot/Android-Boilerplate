@@ -1,8 +1,6 @@
 package uk.co.ribot.androidboilerplate.injection.module;
 
-import android.content.Context;
-
-import java.lang.ref.WeakReference;
+import android.app.Application;
 
 import dagger.Module;
 import dagger.Provides;
@@ -15,16 +13,16 @@ import uk.co.ribot.androidboilerplate.ui.main.MainPresenter;
 @Module
 public class PresentersModule {
 
-    private WeakReference<Context> mContextWeakRef;
+    private Application mApplication;
 
-    public PresentersModule(Context context) {
-        mContextWeakRef = new WeakReference<>(context);
+    public PresentersModule(Application application) {
+        mApplication = application;
     }
 
     @Provides
     @PerActivity
     MainPresenter providesMainPresenter() {
-        return new MainPresenter(mContextWeakRef.get());
+        return new MainPresenter(mApplication);
     }
 
 }

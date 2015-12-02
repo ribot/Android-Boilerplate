@@ -26,26 +26,35 @@ public class TestComponentRule implements TestRule {
 
     private TestComponent mTestComponent;
     private Context mContext;
-    private boolean mMockableDataManager;
+    private ApplicationTestModule.DataManagerTestStrategy mDataManagerTestStrategy;
 
     /**
-     * If mockableDataManager is true, it will crate a data manager using Mockito.spy()
-     * Spy objects call real methods unless they are stubbed. So the DataManager will work as
-     * usual unless an specific method is mocked.
-     * A full mock DataManager is not an option because there are several methods that still
-     * need to return the real value, i.e dataManager.getSubscribeScheduler()
+     * Create a rule that sets up a Dagger TestComponent to inject test dependencies such as mocks.
+     *
+     * It takes a dataManagerTestStrategy that can be:
+     * 1) REAL: injects real instances of the DataManager
+     * 2) MOCK: injects Mockito mock instances of the DataManager that must be stubbed
+     * 3) SPY: injects an Mockito spy instance of the DataManager that can be partially stubbed.
+     * You can read more about Mockito spies and mocks to help you choose the best
+     * strategy for your tests.
      */
-    public TestComponentRule(Context context, boolean mockableDataManager) {
-        init(context, mockableDataManager);
+    public TestComponentRule(Context context,
+                             ApplicationTestModule.DataManagerTestStrategy dmTestStrategy) {
+        init(context, dmTestStrategy);
     }
 
+    /**
+     * Create a rule that sets up a Dagger TestComponent to inject test dependencies such as mocks.
+     * It will use the default dataManagerTestStrategy that is REAL.
+     */
     public TestComponentRule(Context context) {
-        init(context, false);
+        init(context, ApplicationTestModule.DataManagerTestStrategy.REAL);
     }
 
-    private void init(Context context, boolean mockableDataManager) {
+    private void init(Context context,
+                      ApplicationTestModule.DataManagerTestStrategy dataManagerTestStrategy) {
         mContext = context;
-        mMockableDataManager = mockableDataManager;
+        mDataManagerTestStrategy = dataManagerTestStrategy;
     }
 
     public TestComponent getTestComponent() {
@@ -56,6 +65,15 @@ public class TestComponentRule implements TestRule {
         return mContext;
     }
 
+    public ApplicationTestModule.DataManagerTestStrategy getDataManagerTestStrategy() {
+        return mDataManagerTestStrategy;
+    }
+
+    /**
+     * This could return a real instance, a Mockito.mock or a Mockito.spy depending on the
+     * strategy chosen. You can use {@link #getDataManagerTestStrategy()} to get the current
+     * strategy.
+     */
     public TestDataManager getDataManager() {
         return (TestDataManager) mTestComponent.dataManager();
     }
@@ -75,7 +93,7 @@ public class TestComponentRule implements TestRule {
     private void setupDaggerTestComponentInApplication() {
         BoilerplateApplication application = BoilerplateApplication.get(mContext);
         ApplicationTestModule module = new ApplicationTestModule(application,
-                mMockableDataManager);
+                mDataManagerTestStrategy);
         mTestComponent = DaggerTestComponent.builder()
                 .applicationTestModule(module)
                 .build();

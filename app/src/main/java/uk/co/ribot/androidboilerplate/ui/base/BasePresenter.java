@@ -1,6 +1,9 @@
 package uk.co.ribot.androidboilerplate.ui.base;
 
-import android.content.Context;
+import android.app.Application;
+
+import uk.co.ribot.androidboilerplate.BoilerplateApplication;
+import uk.co.ribot.androidboilerplate.injection.component.ApplicationComponent;
 
 /**
  * Base class that implements the Presenter interface and provides a base implementation for
@@ -10,10 +13,10 @@ import android.content.Context;
 public class BasePresenter<T extends MvpView> implements Presenter<T> {
 
     private T mMvpView;
-    private Context mContext;
+    private Application mApplication;
 
-    public BasePresenter(Context context) {
-        mContext = context;
+    public BasePresenter(Application application) {
+        mApplication = application;
     }
 
     @Override
@@ -34,8 +37,8 @@ public class BasePresenter<T extends MvpView> implements Presenter<T> {
         return mMvpView;
     }
 
-    public Context getContext() {
-        return mContext;
+    public ApplicationComponent getApplicationComponent() {
+        return ((BoilerplateApplication) mApplication).getComponent();
     }
 
     public void checkViewAttached() {
