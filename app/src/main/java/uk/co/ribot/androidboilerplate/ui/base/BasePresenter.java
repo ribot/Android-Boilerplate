@@ -1,7 +1,5 @@
 package uk.co.ribot.androidboilerplate.ui.base;
 
-import android.content.Context;
-
 /**
  * Base class that implements the Presenter interface and provides a base implementation for
  * attachView() and detachView(). It also handles keeping a reference to the mvpView that
@@ -10,11 +8,6 @@ import android.content.Context;
 public class BasePresenter<T extends MvpView> implements Presenter<T> {
 
     private T mMvpView;
-    private Context mContext;
-
-    public BasePresenter(Context context) {
-        mContext = context;
-    }
 
     @Override
     public void attachView(T mvpView) {
@@ -32,10 +25,6 @@ public class BasePresenter<T extends MvpView> implements Presenter<T> {
 
     public T getMvpView() {
         return mMvpView;
-    }
-
-    public Context getContext() {
-        return mContext;
     }
 
     public void checkViewAttached() {

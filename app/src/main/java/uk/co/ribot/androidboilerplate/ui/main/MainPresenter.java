@@ -1,34 +1,31 @@
 package uk.co.ribot.androidboilerplate.ui.main;
 
-import android.content.Context;
-
 import java.util.List;
 
 import javax.inject.Inject;
 
 import rx.Subscriber;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import timber.log.Timber;
-import uk.co.ribot.androidboilerplate.BoilerplateApplication;
-import uk.co.ribot.androidboilerplate.R;
 import uk.co.ribot.androidboilerplate.data.DataManager;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
 import uk.co.ribot.androidboilerplate.ui.base.BasePresenter;
-import uk.co.ribot.androidboilerplate.util.SchedulerAppliers;
 
 public class MainPresenter extends BasePresenter<MainMvpView> {
 
-    @Inject protected DataManager mDataManager;
+    private final DataManager mDataManager;
     private Subscription mSubscription;
 
-    public MainPresenter(Context context) {
-        super(context);
+    @Inject
+    public MainPresenter(DataManager dataManager) {
+        mDataManager = dataManager;
     }
 
     @Override
     public void attachView(MainMvpView mvpView) {
         super.attachView(mvpView);
-        BoilerplateApplication.get(getContext()).getComponent().inject(this);
     }
 
     @Override
@@ -40,7 +37,8 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
     public void loadRibots() {
         checkViewAttached();
         mSubscription = mDataManager.getRibots()
-                .compose(SchedulerAppliers.<List<Ribot>>defaultSchedulers(getContext()))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<List<Ribot>>() {
                     @Override
                     public void onCompleted() {
@@ -49,8 +47,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                     @Override
                     public void onError(Throwable e) {
                         Timber.e(e, "There was an error loading the ribots.");
-                        String errorString = getContext().getString(R.string.error_loading_ribots);
-                        getMvpView().showError(errorString);
+                        getMvpView().showError();
                     }
 
                     @Override

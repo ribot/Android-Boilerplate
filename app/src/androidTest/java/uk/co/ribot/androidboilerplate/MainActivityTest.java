@@ -1,5 +1,6 @@
 package uk.co.ribot.androidboilerplate;
 
+import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
@@ -16,7 +17,6 @@ import java.util.List;
 import rx.Observable;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
 import uk.co.ribot.androidboilerplate.test.common.TestDataFactory;
-import uk.co.ribot.androidboilerplate.test.common.rules.ClearDataRule;
 import uk.co.ribot.androidboilerplate.test.common.rules.TestComponentRule;
 import uk.co.ribot.androidboilerplate.ui.main.MainActivity;
 
@@ -31,33 +31,41 @@ import static org.mockito.Mockito.when;
 public class MainActivityTest {
 
     public final TestComponentRule component =
-            new TestComponentRule(InstrumentationRegistry.getTargetContext(), true);
-    public final ClearDataRule clearDataRule = new ClearDataRule(component);
+            new TestComponentRule(InstrumentationRegistry.getTargetContext());
     public final ActivityTestRule<MainActivity> main =
-            new ActivityTestRule<>(MainActivity.class, false, false);
+            new ActivityTestRule<MainActivity>(MainActivity.class, false, false) {
+                @Override
+                protected Intent getActivityIntent() {
+                    // Override the default intent so we pass a false flag for syncing so it doesn't
+                    // start a sync service in the background that would affect  the behaviour of
+                    // this test.
+                    return MainActivity.getStartIntent(
+                            InstrumentationRegistry.getTargetContext(), false);
+                }
+            };
 
     // TestComponentRule needs to go first to make sure the Dagger ApplicationTestComponent is set
     // in the Application before any Activity is launched.
     @Rule
-    public TestRule chain = RuleChain.outerRule(component).around(clearDataRule).around(main);
+    public final TestRule chain = RuleChain.outerRule(component).around(main);
 
     @Test
     public void listOfRibotsShows() {
-        List<Ribot> mockRibots = TestDataFactory.makeListRibots(20);
-        when(component.getMockRibotsService().getRibots())
-                .thenReturn(Observable.just(mockRibots));
+        List<Ribot> testDataRibots = TestDataFactory.makeListRibots(20);
+        when(component.getMockDataManager().getRibots())
+                .thenReturn(Observable.just(testDataRibots));
 
         main.launchActivity(null);
 
         int position = 0;
-        for (Ribot mockRibot : mockRibots) {
+        for (Ribot ribot : testDataRibots) {
             onView(withId(R.id.recycler_view))
                     .perform(RecyclerViewActions.scrollToPosition(position));
-            String name = String.format("%s %s", mockRibot.profile.name.first,
-                    mockRibot.profile.name.last);
+            String name = String.format("%s %s", ribot.profile.name.first,
+                    ribot.profile.name.last);
             onView(withText(name))
                     .check(matches(isDisplayed()));
-            onView(withText(mockRibot.profile.email))
+            onView(withText(ribot.profile.email))
                     .check(matches(isDisplayed()));
             position++;
         }

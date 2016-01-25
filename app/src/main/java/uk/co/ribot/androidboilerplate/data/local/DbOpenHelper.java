@@ -4,12 +4,17 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import javax.inject.Inject;
+
+import uk.co.ribot.androidboilerplate.injection.ApplicationContext;
+
 public class DbOpenHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "ribots.db";
     public static final int DATABASE_VERSION = 2;
 
-    public DbOpenHelper(Context context) {
+    @Inject
+    public DbOpenHelper(@ApplicationContext Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

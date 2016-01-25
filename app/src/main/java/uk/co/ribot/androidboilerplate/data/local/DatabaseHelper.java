@@ -1,6 +1,5 @@
 package uk.co.ribot.androidboilerplate.data.local;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -10,17 +9,22 @@ import com.squareup.sqlbrite.SqlBrite;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
 
+@Singleton
 public class DatabaseHelper {
 
-    private BriteDatabase mDb;
+    private final BriteDatabase mDb;
 
-    public DatabaseHelper(Context context) {
-        mDb = SqlBrite.create().wrapDatabaseHelper(new DbOpenHelper(context));
+    @Inject
+    public DatabaseHelper(DbOpenHelper dbOpenHelper) {
+        mDb = SqlBrite.create().wrapDatabaseHelper(dbOpenHelper);
     }
 
     public BriteDatabase getBriteDb() {
@@ -34,6 +38,7 @@ public class DatabaseHelper {
         return Observable.create(new Observable.OnSubscribe<Void>() {
             @Override
             public void call(Subscriber<? super Void> subscriber) {
+                if (subscriber.isUnsubscribed()) return;
                 BriteDatabase.Transaction transaction = mDb.newTransaction();
                 try {
                     Cursor cursor = mDb.query("SELECT name FROM sqlite_master WHERE type='table'");
@@ -54,6 +59,7 @@ public class DatabaseHelper {
         return Observable.create(new Observable.OnSubscribe<Ribot>() {
             @Override
             public void call(Subscriber<? super Ribot> subscriber) {
+                if (subscriber.isUnsubscribed()) return;
                 BriteDatabase.Transaction transaction = mDb.newTransaction();
                 try {
                     mDb.delete(Db.RibotProfileTable.TABLE_NAME, null);

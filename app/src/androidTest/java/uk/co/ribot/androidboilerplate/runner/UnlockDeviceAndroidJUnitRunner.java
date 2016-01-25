@@ -1,4 +1,4 @@
-package uk.co.ribot.androidboilerplate.util;
+package uk.co.ribot.androidboilerplate.runner;
 
 import android.app.Application;
 import android.app.KeyguardManager;
@@ -11,14 +11,18 @@ import static android.os.PowerManager.ACQUIRE_CAUSES_WAKEUP;
 import static android.os.PowerManager.FULL_WAKE_LOCK;
 import static android.os.PowerManager.ON_AFTER_RELEASE;
 
-public class UnlockDeviceTestRunner extends AndroidJUnitRunner {
+/**
+ * Extension of AndroidJUnitRunner that adds some functionality to unblock the device screen
+ * before starting the tests.
+ */
+public class UnlockDeviceAndroidJUnitRunner extends AndroidJUnitRunner {
 
     private PowerManager.WakeLock mWakeLock;
 
     @Override
     public void onStart() {
         Application application = (Application) getTargetContext().getApplicationContext();
-        String simpleName = UnlockDeviceTestRunner.class.getSimpleName();
+        String simpleName = UnlockDeviceAndroidJUnitRunner.class.getSimpleName();
         // Unlock the device so that the tests can input keystrokes.
         ((KeyguardManager) application.getSystemService(KEYGUARD_SERVICE))
                 .newKeyguardLock(simpleName)

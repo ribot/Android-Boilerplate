@@ -1,4 +1,4 @@
-package uk.co.ribot.androidboilerplate.injection.scope;
+package uk.co.ribot.androidboilerplate.injection;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

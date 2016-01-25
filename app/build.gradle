@@ -13,7 +13,7 @@ android {
         applicationId 'uk.co.ribot.androidboilerplate'
         minSdkVersion 16
         targetSdkVersion 23
-        testInstrumentationRunner 'uk.co.ribot.androidboilerplate.util.UnlockDeviceTestRunner'
+        testInstrumentationRunner "${applicationId}.runner.RxAndroidJUnitRunner"
         versionCode 1000
         // Major -> Millions, Minor -> Thousands, Bugfix -> Hundreds. E.g 1.3.72 == 1,003,072
         versionName '0.1.0'
@@ -100,12 +100,14 @@ dependencies {
     compile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
 
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.squareup.sqlbrite:sqlbrite:0.4.1'
+    compile 'com.squareup.sqlbrite:sqlbrite:0.5.0'
     compile "com.squareup.retrofit:retrofit:$RETROFIT_VERSION"
     compile "com.squareup.retrofit:converter-gson:$RETROFIT_VERSION"
     compile "com.squareup.retrofit:adapter-rxjava:$RETROFIT_VERSION"
     compile 'com.squareup:otto:1.3.8'
-    compile 'io.reactivex:rxandroid:1.0.1'
+
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'io.reactivex:rxjava:1.1.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.jakewharton.timber:timber:4.1.0'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
@@ -143,6 +145,11 @@ dependencies {
     apt daggerCompiler
     testApt daggerCompiler
     androidTestApt daggerCompiler
+}
+
+// Log out test results to console
+tasks.matching {it instanceof Test}.all {
+    testLogging.events = ["failed", "passed", "skipped"]
 }
 
 

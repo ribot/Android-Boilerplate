@@ -10,6 +10,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import uk.co.ribot.androidboilerplate.R;
@@ -19,6 +21,7 @@ public class RibotsAdapter extends RecyclerView.Adapter<RibotsAdapter.RibotViewH
 
     private List<Ribot> mRibots;
 
+    @Inject
     public RibotsAdapter() {
         mRibots = new ArrayList<>();
     }

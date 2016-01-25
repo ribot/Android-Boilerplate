@@ -15,7 +15,7 @@ Libraries and tools included:
 - [Picasso](http://square.github.io/picasso/)
 - [Otto](http://square.github.io/otto/) event bus
 - Functional tests with [Espresso](https://code.google.com/p/android-test-kit/wiki/Espresso)
-- Unit tests with [Robolectric](http://robolectric.org/) 
+- [Robolectric](http://robolectric.org/)
 - [Mockito](http://mockito.org/)
 - [Checkstyle](http://checkstyle.sourceforge.net/), [PMD](https://pmd.github.io/) and [Findbugs](http://findbugs.sourceforge.net/) for code analysis
 
@@ -139,3 +139,23 @@ To quickly start a new project from this boilerplate follow the next steps:
 * Add Fabric API key and secret to fabric.properties and uncomment Fabric plugin set up in `app/build.gradle`
 * Update `proguard-rules.pro` to keep models (see TODO in file) and add extra rules to file if needed.
 * Update README with information relevant to the new project.
+* Update LICENSE to match the requirements of the new project.
+
+## License
+
+```
+    Copyright 2015 Ribot Ltd.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+```
+

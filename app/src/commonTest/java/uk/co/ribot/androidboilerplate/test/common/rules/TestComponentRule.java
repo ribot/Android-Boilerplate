@@ -7,10 +7,7 @@ import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
 import uk.co.ribot.androidboilerplate.BoilerplateApplication;
-import uk.co.ribot.androidboilerplate.data.local.DatabaseHelper;
-import uk.co.ribot.androidboilerplate.data.local.PreferencesHelper;
-import uk.co.ribot.androidboilerplate.data.remote.RibotsService;
-import uk.co.ribot.androidboilerplate.test.common.TestDataManager;
+import uk.co.ribot.androidboilerplate.data.DataManager;
 import uk.co.ribot.androidboilerplate.test.common.injection.component.DaggerTestComponent;
 import uk.co.ribot.androidboilerplate.test.common.injection.component.TestComponent;
 import uk.co.ribot.androidboilerplate.test.common.injection.module.ApplicationTestModule;
@@ -24,62 +21,23 @@ import uk.co.ribot.androidboilerplate.test.common.injection.module.ApplicationTe
  */
 public class TestComponentRule implements TestRule {
 
-    private TestComponent mTestComponent;
-    private Context mContext;
-    private boolean mMockableDataManager;
-
-    /**
-     * If mockableDataManager is true, it will crate a data manager using Mockito.spy()
-     * Spy objects call real methods unless they are stubbed. So the DataManager will work as
-     * usual unless an specific method is mocked.
-     * A full mock DataManager is not an option because there are several methods that still
-     * need to return the real value, i.e dataManager.getSubscribeScheduler()
-     */
-    public TestComponentRule(Context context, boolean mockableDataManager) {
-        init(context, mockableDataManager);
-    }
+    private final TestComponent mTestComponent;
+    private final Context mContext;
 
     public TestComponentRule(Context context) {
-        init(context, false);
-    }
-
-    private void init(Context context, boolean mockableDataManager) {
         mContext = context;
-        mMockableDataManager = mockableDataManager;
-    }
-
-    public TestComponent getTestComponent() {
-        return mTestComponent;
+        BoilerplateApplication application = BoilerplateApplication.get(context);
+        mTestComponent = DaggerTestComponent.builder()
+                .applicationTestModule(new ApplicationTestModule(application))
+                .build();
     }
 
     public Context getContext() {
         return mContext;
     }
 
-    public TestDataManager getDataManager() {
-        return (TestDataManager) mTestComponent.dataManager();
-    }
-
-    public RibotsService getMockRibotsService() {
-        return getDataManager().getRibotsService();
-    }
-
-    public DatabaseHelper getDatabaseHelper() {
-        return getDataManager().getDatabaseHelper();
-    }
-
-    public PreferencesHelper getPreferencesHelper() {
-        return getDataManager().getPreferencesHelper();
-    }
-
-    private void setupDaggerTestComponentInApplication() {
-        BoilerplateApplication application = BoilerplateApplication.get(mContext);
-        ApplicationTestModule module = new ApplicationTestModule(application,
-                mMockableDataManager);
-        mTestComponent = DaggerTestComponent.builder()
-                .applicationTestModule(module)
-                .build();
-        application.setComponent(mTestComponent);
+    public DataManager getMockDataManager() {
+        return mTestComponent.dataManager();
     }
 
     @Override
@@ -87,12 +45,10 @@ public class TestComponentRule implements TestRule {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                try {
-                    setupDaggerTestComponentInApplication();
-                    base.evaluate();
-                } finally {
-                    mTestComponent = null;
-                }
+                BoilerplateApplication application = BoilerplateApplication.get(mContext);
+                application.setComponent(mTestComponent);
+                base.evaluate();
+                application.setComponent(null);
             }
         };
     }

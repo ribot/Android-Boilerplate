@@ -3,10 +3,8 @@ package uk.co.ribot.androidboilerplate.util;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
-import android.text.Html;
 
 import uk.co.ribot.androidboilerplate.R;
 
@@ -39,39 +37,6 @@ public final class DialogFactory {
 
     public static Dialog createGenericErrorDialog(Context context, @StringRes int messageResource) {
         return createGenericErrorDialog(context, context.getString(messageResource));
-    }
-
-    public static Dialog createGenericDialog(Context context,
-                                             String title,
-                                             String message,
-                                             String positiveButton,
-                                             String negativeButton,
-                                             DialogInterface.OnClickListener positiveListener,
-                                             DialogInterface.OnClickListener negativeListener) {
-
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context)
-                .setTitle(title)
-                .setMessage(Html.fromHtml(message))
-                .setPositiveButton(positiveButton, positiveListener)
-                .setNegativeButton(negativeButton, negativeListener);
-        return alertDialog.create();
-    }
-
-    public static Dialog createGenericDialog(Context context,
-                                             @StringRes int titleResource,
-                                             @StringRes int messageResource,
-                                             @StringRes int positiveButtonResource,
-                                             @StringRes int negativeButtonResource,
-                                             DialogInterface.OnClickListener positiveListener,
-                                             DialogInterface.OnClickListener negativeListener) {
-
-        return createGenericDialog(context,
-                context.getString(titleResource),
-                context.getString(messageResource),
-                context.getString(positiveButtonResource),
-                context.getString(negativeButtonResource),
-                positiveListener,
-                negativeListener);
     }
 
     public static ProgressDialog createProgressDialog(Context context, String message) {

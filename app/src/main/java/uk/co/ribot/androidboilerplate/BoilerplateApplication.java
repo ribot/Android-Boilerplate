@@ -23,10 +23,6 @@ public class BoilerplateApplication extends Application  {
             Timber.plant(new Timber.DebugTree());
             Fabric.with(this, new Crashlytics());
         }
-
-        mApplicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .build();
     }
 
     public static BoilerplateApplication get(Context context) {
@@ -34,6 +30,11 @@ public class BoilerplateApplication extends Application  {
     }
 
     public ApplicationComponent getComponent() {
+        if (mApplicationComponent == null) {
+            mApplicationComponent = DaggerApplicationComponent.builder()
+                    .applicationModule(new ApplicationModule(this))
+                    .build();
+        }
         return mApplicationComponent;
     }
 
@@ -42,4 +43,3 @@ public class BoilerplateApplication extends Application  {
         mApplicationComponent = applicationComponent;
     }
 }
-

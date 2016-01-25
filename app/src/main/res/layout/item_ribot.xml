@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="6dp"
     android:layout_marginLeft="12dp"
     android:layout_marginRight="12dp"
     android:layout_marginTop="6dp"
-    android:layout_marginBottom="6dp"
     card_view:cardCornerRadius="2dp">
 
     <RelativeLayout
@@ -27,18 +27,18 @@
             android:id="@+id/text_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
             android:layout_toRightOf="@id/view_hex_color"
+            android:textSize="@dimen/text_body"
             tools:text="Antony Ribot" />
 
         <TextView
             android:id="@+id/text_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/view_hex_color"
             android:layout_below="@id/text_name"
             android:layout_marginTop="5dp"
-            android:textSize="14sp"
+            android:layout_toRightOf="@id/view_hex_color"
+            android:textSize="@dimen/text_small_body"
             tools:text="developer" />
 
     </RelativeLayout>

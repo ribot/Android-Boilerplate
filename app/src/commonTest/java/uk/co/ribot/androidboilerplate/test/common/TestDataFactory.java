@@ -19,33 +19,33 @@ public class TestDataFactory {
         return UUID.randomUUID().toString();
     }
 
-    public static Ribot makeRibot() {
-        return new Ribot(makeProfile());
+    public static Ribot makeRibot(String uniqueSuffix) {
+        return new Ribot(makeProfile(uniqueSuffix));
     }
 
     public static List<Ribot> makeListRibots(int number) {
         List<Ribot> ribots = new ArrayList<>();
         for (int i = 0; i < number; i++) {
-            ribots.add(makeRibot());
+            ribots.add(makeRibot(String.valueOf(i)));
         }
         return ribots;
     }
 
-    public static Profile makeProfile() {
+    public static Profile makeProfile(String uniqueSuffix) {
         Profile profile = new Profile();
-        profile.email = randomUuid();
-        profile.name = makeName();
+        profile.email = "email" + uniqueSuffix + "@ribot.co.uk";
+        profile.name = makeName(uniqueSuffix);
         profile.dateOfBirth = new Date();
         profile.hexColor = "#0066FF";
-        profile.avatar = "http://api.ribot.io/images/" + profile.email;
+        profile.avatar = "http://api.ribot.io/images/" + uniqueSuffix;
         profile.bio = randomUuid();
         return profile;
     }
 
-    public static Name makeName() {
+    public static Name makeName(String uniqueSuffix) {
         Name name = new Name();
-        name.first = randomUuid();
-        name.last = randomUuid();
+        name.first = "Name-" + uniqueSuffix;
+        name.last = "Surname-" + uniqueSuffix;
         return name;
     }
 
