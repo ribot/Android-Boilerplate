@@ -7,7 +7,6 @@ import javax.inject.Singleton;
 
 import rx.Observable;
 import rx.functions.Action0;
-import rx.functions.Func1;
 import uk.co.ribot.androidboilerplate.data.local.DatabaseHelper;
 import uk.co.ribot.androidboilerplate.data.local.PreferencesHelper;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
@@ -37,12 +36,7 @@ public class DataManager {
 
     public Observable<Ribot> syncRibots() {
         return mRibotsService.getRibots()
-                .concatMap(new Func1<List<Ribot>, Observable<Ribot>>() {
-                    @Override
-                    public Observable<Ribot> call(List<Ribot> ribots) {
-                        return mDatabaseHelper.setRibots(ribots);
-                    }
-                });
+                .concatMap(ribots -> mDatabaseHelper.setRibots(ribots));
     }
 
     public Observable<List<Ribot>> getRibots() {
@@ -52,12 +46,7 @@ public class DataManager {
 
     /// Helper method to post events from doOnCompleted.
     private Action0 postEventAction(final Object event) {
-        return new Action0() {
-            @Override
-            public void call() {
-                mEventPoster.postEventSafely(event);
-            }
-        };
+        return () -> mEventPoster.postEventSafely(event);
     }
 
 }

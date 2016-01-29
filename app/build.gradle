@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply from: '../config/quality/quality.gradle'
 apply plugin: 'com.github.triplet.play'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 //TODO uncomment line below after adding fabric api secret and key to fabric.properties
 //apply plugin: 'io.fabric'
 
@@ -68,6 +69,12 @@ android {
     //Needed because of this https://github.com/square/okio/issues/58
     lintOptions {
         warning 'InvalidPackage'
+        abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -76,6 +83,11 @@ play {
     pk12File = file('key.p12')
     // By default publishes to Alpha channel
     track = 'alpha'
+}
+
+retrolambda {
+    javaVersion JavaVersion.VERSION_1_7
+    jvmArgs '-noverify'
 }
 
 dependencies {

@@ -27,11 +27,6 @@ public class EventPosterHelper {
      * Helper method to post an event from a different thread to the main one.
      */
     public void postEventSafely(final Object event) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                mBus.post(event);
-            }
-        });
+        new Handler(Looper.getMainLooper()).post(() -> mBus.post(event));
     }
 }
