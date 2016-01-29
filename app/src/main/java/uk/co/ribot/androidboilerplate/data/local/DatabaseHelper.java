@@ -14,7 +14,6 @@ import javax.inject.Singleton;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Func1;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
 
 @Singleton
@@ -81,12 +80,7 @@ public class DatabaseHelper {
     public Observable<List<Ribot>> getRibots() {
         return mDb.createQuery(Db.RibotProfileTable.TABLE_NAME,
                 "SELECT * FROM " + Db.RibotProfileTable.TABLE_NAME)
-                .mapToList(new Func1<Cursor, Ribot>() {
-                    @Override
-                    public Ribot call(Cursor cursor) {
-                        return new Ribot(Db.RibotProfileTable.parseCursor(cursor));
-                    }
-                });
+                .mapToList(cursor -> new Ribot(Db.RibotProfileTable.parseCursor(cursor)));
     }
 
 }
