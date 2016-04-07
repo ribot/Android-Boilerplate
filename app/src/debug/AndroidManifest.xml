@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="nyc.friendlyrobot.sample.androidboilerplate" >
+    package="nyc.friendlyrobot.anchor.androidboilerplate" >
 
     <!-- Used by instrumentation tests only. Do not include in live build ! -->
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />

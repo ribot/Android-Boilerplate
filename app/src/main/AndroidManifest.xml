@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="nyc.friendlyrobot.sample.androidboilerplate" >
+    package="nyc.friendlyrobot.anchor.androidboilerplate" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="nyc.friendlyrobot.sample.BoilerplateApplication"
+        android:name="nyc.friendlyrobot.anchor.BoilerplateApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="nyc.friendlyrobot.sample.ui.main.MainActivity"
+            android:name="nyc.friendlyrobot.anchor.ui.main.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,10 +21,10 @@
             </intent-filter>
         </activity>
 
-        <api android:name="nyc.friendlyrobot.sample.data.SyncService"/>
+        <api android:name="nyc.friendlyrobot.anchor.data.SyncService"/>
 
         <receiver
-            android:name="nyc.friendlyrobot.sample.data.SyncService$SyncOnConnectionAvailable"
+            android:name="nyc.friendlyrobot.anchor.data.SyncService$SyncOnConnectionAvailable"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

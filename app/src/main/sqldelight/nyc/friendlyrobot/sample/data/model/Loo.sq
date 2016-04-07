@@ -1,0 +1,23 @@
+CREATE TABLE loo (
+    _id LONG  PRIMARY KEY AUTOINCREMENT,
+    id LONG NOT NULL,
+    updated_at LONG NOT NULL,
+    foo_id INT NOT NULL,
+    FOREIGN KEY (foo_id) REFERENCES foo(id)
+
+);
+
+select_all:
+SELECT *
+FROM loo;
+
+select_for_foo:
+SELECT *
+FROM loo
+WHERE foo_id = ?;
+
+select_for_id:
+SELECT *
+FROM loo
+WHERE id = ?;
+

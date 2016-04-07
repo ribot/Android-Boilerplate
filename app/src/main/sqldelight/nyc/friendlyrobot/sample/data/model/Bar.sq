@@ -1,0 +1,17 @@
+CREATE TABLE bar (
+    _id LONG  PRIMARY KEY AUTOINCREMENT,
+    id LONG NOT NULL,
+    name STRING NOT NULL,
+    updated_at LONG NOT NULL
+
+);
+
+select_all:
+SELECT *
+FROM bar;
+
+select_by_id:
+SELECT *
+FROM bar
+WHERE id = ?;
+
