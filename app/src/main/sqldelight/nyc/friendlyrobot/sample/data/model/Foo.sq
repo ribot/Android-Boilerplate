@@ -1,0 +1,19 @@
+CREATE TABLE foo (
+    _id LONG PRIMARY KEY AUTOINCREMENT,
+    id LONG NOT NULL,
+    name STRING  NULL,
+    bar_id INT  NULL,
+    updated_at LONG NOT NULL,
+    FOREIGN KEY (bar_id) REFERENCES bar(id)
+
+);
+
+select_all:
+SELECT *
+FROM foo;
+
+select_route:
+SELECT *
+FROM foo
+WHERE foo.id = ?;
+
