@@ -12,7 +12,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.ribot.androidboilerplate.R;
 import uk.co.ribot.androidboilerplate.data.SyncService;
@@ -28,7 +28,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @Inject MainPresenter mMainPresenter;
     @Inject RibotsAdapter mRibotsAdapter;
 
-    @Bind(R.id.recycler_view) RecyclerView mRecyclerView;
+    @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
 
     /**
      * Return an Intent to start this Activity.

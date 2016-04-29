@@ -5,9 +5,9 @@ import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
-import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
-import retrofit2.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import rx.Observable;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;

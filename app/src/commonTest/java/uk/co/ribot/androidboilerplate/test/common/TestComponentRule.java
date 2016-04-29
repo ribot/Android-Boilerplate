@@ -1,4 +1,4 @@
-package uk.co.ribot.androidboilerplate.test.common.rules;
+package uk.co.ribot.androidboilerplate.test.common;
 
 import android.content.Context;
 

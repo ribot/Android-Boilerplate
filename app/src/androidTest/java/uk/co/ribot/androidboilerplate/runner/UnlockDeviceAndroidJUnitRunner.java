@@ -1,5 +1,6 @@
 package uk.co.ribot.androidboilerplate.runner;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.app.KeyguardManager;
 import android.os.PowerManager;
@@ -19,6 +20,7 @@ public class UnlockDeviceAndroidJUnitRunner extends AndroidJUnitRunner {
 
     private PowerManager.WakeLock mWakeLock;
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onStart() {
         Application application = (Application) getTargetContext().getApplicationContext();

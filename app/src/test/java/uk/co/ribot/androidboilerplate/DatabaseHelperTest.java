@@ -2,7 +2,7 @@ package uk.co.ribot.androidboilerplate;
 
 import android.database.Cursor;
 
-import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricGradleTestRunner;
@@ -19,6 +19,7 @@ import uk.co.ribot.androidboilerplate.data.local.DbOpenHelper;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
 import uk.co.ribot.androidboilerplate.test.common.TestDataFactory;
 import uk.co.ribot.androidboilerplate.util.DefaultConfig;
+import uk.co.ribot.androidboilerplate.util.RxSchedulersOverrideRule;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -32,10 +33,8 @@ public class DatabaseHelperTest {
     private final DatabaseHelper mDatabaseHelper =
             new DatabaseHelper(new DbOpenHelper(RuntimeEnvironment.application));
 
-    @Before
-    public void setUp() {
-        mDatabaseHelper.clearTables().subscribe();
-    }
+    @Rule
+    public final RxSchedulersOverrideRule mOverrideSchedulersRule = new RxSchedulersOverrideRule();
 
     @Test
     public void setRibots() {

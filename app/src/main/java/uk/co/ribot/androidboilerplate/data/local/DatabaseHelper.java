@@ -31,30 +31,6 @@ public class DatabaseHelper {
         return mDb;
     }
 
-    /**
-     * Remove all the data from all the tables in the database.
-     */
-    public Observable<Void> clearTables() {
-        return Observable.create(new Observable.OnSubscribe<Void>() {
-            @Override
-            public void call(Subscriber<? super Void> subscriber) {
-                if (subscriber.isUnsubscribed()) return;
-                BriteDatabase.Transaction transaction = mDb.newTransaction();
-                try {
-                    Cursor cursor = mDb.query("SELECT name FROM sqlite_master WHERE type='table'");
-                    while (cursor.moveToNext()) {
-                        mDb.delete(cursor.getString(cursor.getColumnIndex("name")), null);
-                    }
-                    cursor.close();
-                    transaction.markSuccessful();
-                    subscriber.onCompleted();
-                } finally {
-                    transaction.end();
-                }
-            }
-        });
-    }
-
     public Observable<Ribot> setRibots(final Collection<Ribot> newRibots) {
         return Observable.create(new Observable.OnSubscribe<Ribot>() {
             @Override
