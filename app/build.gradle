@@ -108,7 +108,7 @@ dependencies {
 
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'io.reactivex:rxjava:1.1.2'
+    compile 'io.reactivex:rxjava:1.1.4'
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     compile 'com.jakewharton.timber:timber:4.1.0'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
