@@ -34,11 +34,11 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void loadRibots() {
+    public void loadRibots(boolean isNetworkConnected) {
         checkViewAttached();
-        mSubscription = mDataManager.getRibots()
-                .observeOn(AndroidSchedulers.mainThread())
+        mSubscription = mDataManager.getRibots(isNetworkConnected)
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Ribot>>() {
                     @Override
                     public void onCompleted() {

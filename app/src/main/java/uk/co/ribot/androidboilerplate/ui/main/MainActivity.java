@@ -6,19 +6,17 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
-
-import java.util.Collections;
-import java.util.List;
-
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.ribot.androidboilerplate.R;
-import uk.co.ribot.androidboilerplate.data.SyncService;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
 import uk.co.ribot.androidboilerplate.ui.base.BaseActivity;
 import uk.co.ribot.androidboilerplate.util.DialogFactory;
+import uk.co.ribot.androidboilerplate.util.NetworkUtil;
+
+import javax.inject.Inject;
+import java.util.Collections;
+import java.util.List;
 
 public class MainActivity extends BaseActivity implements MainMvpView {
 
@@ -51,11 +49,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mRecyclerView.setAdapter(mRibotsAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mMainPresenter.attachView(this);
-        mMainPresenter.loadRibots();
+        mMainPresenter.loadRibots(getIntent().getBooleanExtra(EXTRA_TRIGGER_SYNC_FLAG, true) &&
+                NetworkUtil.isNetworkConnected(this));
 
-        if (getIntent().getBooleanExtra(EXTRA_TRIGGER_SYNC_FLAG, true)) {
-            startService(SyncService.getStartIntent(this));
-        }
     }
 
     @Override
@@ -65,7 +61,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mMainPresenter.detachView();
     }
 
-    /***** MVP View methods implementation *****/
+    /*****
+     * MVP View methods implementation
+     *****/
 
     @Override
     public void showRibots(List<Ribot> ribots) {

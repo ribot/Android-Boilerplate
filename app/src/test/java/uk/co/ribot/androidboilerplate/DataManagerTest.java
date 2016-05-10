@@ -48,18 +48,6 @@ public class DataManagerTest {
     }
 
     @Test
-    public void syncRibotsEmitsValues() {
-        List<Ribot> ribots = Arrays.asList(TestDataFactory.makeRibot("r1"),
-                TestDataFactory.makeRibot("r2"));
-        stubSyncRibotsHelperCalls(ribots);
-
-        TestSubscriber<Ribot> result = new TestSubscriber<>();
-        mDataManager.syncRibots().subscribe(result);
-        result.assertNoErrors();
-        result.assertReceivedOnNext(ribots);
-    }
-
-    @Test
     public void syncRibotsCallsApiAndDatabase() {
         List<Ribot> ribots = Arrays.asList(TestDataFactory.makeRibot("r1"),
                 TestDataFactory.makeRibot("r2"));
@@ -76,7 +64,7 @@ public class DataManagerTest {
         when(mMockRibotsService.getRibots())
                 .thenReturn(Observable.<List<Ribot>>error(new RuntimeException()));
 
-        mDataManager.syncRibots().subscribe(new TestSubscriber<Ribot>());
+        mDataManager.syncRibots().subscribe(new TestSubscriber<List<Ribot>>());
         // Verify right calls to helper methods
         verify(mMockRibotsService).getRibots();
         verify(mMockDatabaseHelper, never()).setRibots(anyListOf(Ribot.class));
