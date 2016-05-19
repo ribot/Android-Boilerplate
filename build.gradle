@@ -9,6 +9,7 @@ buildscript {
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         //noinspection GradleDynamicVersion
         classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
     }
 }
 

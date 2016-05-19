@@ -4,6 +4,7 @@ apply plugin: 'com.github.triplet.play'
 apply plugin: 'com.neenbedankt.android-apt'
 //TODO uncomment line below after adding fabric api secret and key to fabric.properties
 //apply plugin: 'io.fabric'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 23
@@ -68,6 +69,11 @@ android {
     //Needed because of this https://github.com/square/okio/issues/58
     lintOptions {
         warning 'InvalidPackage'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
