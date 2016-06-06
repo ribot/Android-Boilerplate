@@ -41,7 +41,7 @@ public class Db {
             values.put(COLUMN_LAST_NAME, profile.name.last);
             values.put(COLUMN_HEX_COLOR, profile.hexColor);
             values.put(COLUMN_DATE_OF_BIRTH, profile.dateOfBirth.getTime());
-            values.put(COLUMN_AVATAR, profile.avatar);
+            values.put(COLUMN_AVATAR, profile.avatar != null ? profile.avatar : "");
             if (profile.bio != null) values.put(COLUMN_BIO, profile.bio);
             return values;
         }
