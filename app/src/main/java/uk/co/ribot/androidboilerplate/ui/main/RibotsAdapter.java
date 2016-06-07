@@ -1,11 +1,18 @@
 package uk.co.ribot.androidboilerplate.ui.main;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +45,26 @@ public class RibotsAdapter extends RecyclerView.Adapter<RibotsAdapter.RibotViewH
     }
 
     @Override
-    public void onBindViewHolder(RibotViewHolder holder, int position) {
+    public void onBindViewHolder(final RibotViewHolder holder, int position) {
         Ribot ribot = mRibots.get(position);
-        holder.hexColorView.setBackgroundColor(Color.parseColor(ribot.profile.hexColor));
+        if (ribot.profile.avatar != null && !ribot.profile.avatar.isEmpty()) {
+
+            int imageDimension = holder.itemView.getContext().getResources()
+                    .getDimensionPixelSize(R.dimen.avatar_size);
+            Glide.with(holder.itemView.getContext())
+                    .load(ribot.profile.avatar)
+                    .asBitmap()
+                    .into(new SimpleTarget<Bitmap>(imageDimension, imageDimension) {
+                        @Override
+                        public void onResourceReady(Bitmap resource,
+                                                    GlideAnimation<? super Bitmap> glideAnimation) {
+                            holder.avatarImageView.setBackground(
+                                    new BitmapDrawable(holder.itemView.getResources(), resource));
+                        }
+                    });
+        } else {
+            holder.avatarImageView.setBackgroundColor(Color.parseColor(ribot.profile.hexColor));
+        }
         holder.nameTextView.setText(String.format("%s %s",
                 ribot.profile.name.first, ribot.profile.name.last));
         holder.emailTextView.setText(ribot.profile.email);
@@ -53,7 +77,7 @@ public class RibotsAdapter extends RecyclerView.Adapter<RibotsAdapter.RibotViewH
 
     class RibotViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.view_hex_color) View hexColorView;
+        @BindView(R.id.image_avatar) ImageView avatarImageView;
         @BindView(R.id.text_name) TextView nameTextView;
         @BindView(R.id.text_email) TextView emailTextView;
 
