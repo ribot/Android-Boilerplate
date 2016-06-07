@@ -3,8 +3,6 @@ package uk.co.ribot.androidboilerplate.util;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.squareup.otto.Bus;
-
 import javax.inject.Inject;
 
 /**
@@ -12,15 +10,15 @@ import javax.inject.Inject;
  */
 public class EventPosterHelper {
 
-    private final Bus mBus;
+    private final RxEventBus mRxEventBus;
 
     @Inject
-    public EventPosterHelper(Bus bus) {
-        mBus = bus;
+    public EventPosterHelper(RxEventBus bus) {
+        mRxEventBus = bus;
     }
 
-    public Bus getBus() {
-        return mBus;
+    public RxEventBus getBus() {
+        return mRxEventBus;
     }
 
     /**
@@ -30,7 +28,7 @@ public class EventPosterHelper {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                mBus.post(event);
+                mRxEventBus.post(event);
             }
         });
     }

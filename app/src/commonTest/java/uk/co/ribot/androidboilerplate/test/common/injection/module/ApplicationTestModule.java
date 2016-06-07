@@ -3,8 +3,6 @@ package uk.co.ribot.androidboilerplate.test.common.injection.module;
 import android.app.Application;
 import android.content.Context;
 
-import com.squareup.otto.Bus;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -37,12 +35,6 @@ public class ApplicationTestModule {
     @ApplicationContext
     Context provideContext() {
         return mApplication;
-    }
-
-    @Provides
-    @Singleton
-    Bus provideEventBus() {
-        return new Bus();
     }
 
     /************* MOCKS *************/

@@ -3,8 +3,6 @@ package uk.co.ribot.androidboilerplate.injection.component;
 import android.app.Application;
 import android.content.Context;
 
-import com.squareup.otto.Bus;
-
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -15,6 +13,7 @@ import uk.co.ribot.androidboilerplate.data.local.PreferencesHelper;
 import uk.co.ribot.androidboilerplate.data.remote.RibotsService;
 import uk.co.ribot.androidboilerplate.injection.ApplicationContext;
 import uk.co.ribot.androidboilerplate.injection.module.ApplicationModule;
+import uk.co.ribot.androidboilerplate.util.RxEventBus;
 
 @Singleton
 @Component(modules = ApplicationModule.class)
@@ -28,6 +27,6 @@ public interface ApplicationComponent {
     PreferencesHelper preferencesHelper();
     DatabaseHelper databaseHelper();
     DataManager dataManager();
-    Bus eventBus();
+    RxEventBus eventBus();
 
 }
