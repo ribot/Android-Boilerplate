@@ -48,7 +48,6 @@ public class RibotsAdapter extends RecyclerView.Adapter<RibotsAdapter.RibotViewH
     public void onBindViewHolder(final RibotViewHolder holder, int position) {
         Ribot ribot = mRibots.get(position);
         if (ribot.profile.avatar != null && !ribot.profile.avatar.isEmpty()) {
-
             int imageDimension = holder.itemView.getContext().getResources()
                     .getDimensionPixelSize(R.dimen.avatar_size);
             Glide.with(holder.itemView.getContext())
