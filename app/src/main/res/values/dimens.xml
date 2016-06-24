@@ -10,6 +10,4 @@
     <dimen name="text_body">16sp</dimen>
     <dimen name="text_small_body">14sp</dimen>
 
-    <dimen name="avatar_size">50dp</dimen>
-
 </resources>
