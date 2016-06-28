@@ -41,7 +41,7 @@ public class DatabaseHelper {
                     mDb.delete(Db.RibotProfileTable.TABLE_NAME, null);
                     for (Ribot ribot : newRibots) {
                         long result = mDb.insert(Db.RibotProfileTable.TABLE_NAME,
-                                Db.RibotProfileTable.toContentValues(ribot.profile),
+                                Db.RibotProfileTable.toContentValues(ribot.profile()),
                                 SQLiteDatabase.CONFLICT_REPLACE);
                         if (result >= 0) subscriber.onNext(ribot);
                     }
@@ -60,7 +60,7 @@ public class DatabaseHelper {
                 .mapToList(new Func1<Cursor, Ribot>() {
                     @Override
                     public Ribot call(Cursor cursor) {
-                        return new Ribot(Db.RibotProfileTable.parseCursor(cursor));
+                        return Ribot.create(Db.RibotProfileTable.parseCursor(cursor));
                     }
                 });
     }

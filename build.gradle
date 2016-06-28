@@ -4,7 +4,7 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:2.1.2'
         classpath 'com.github.triplet.gradle:play-publisher:1.1.4'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         //noinspection GradleDynamicVersion

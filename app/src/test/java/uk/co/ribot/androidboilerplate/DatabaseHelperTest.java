@@ -52,7 +52,7 @@ public class DatabaseHelperTest {
         assertEquals(2, cursor.getCount());
         for (Ribot ribot : ribots) {
             cursor.moveToNext();
-            assertEquals(ribot.profile, Db.RibotProfileTable.parseCursor(cursor));
+            assertEquals(ribot.profile(), Db.RibotProfileTable.parseCursor(cursor));
         }
     }
 

@@ -36,28 +36,30 @@ public class Db {
 
         public static ContentValues toContentValues(Profile profile) {
             ContentValues values = new ContentValues();
-            values.put(COLUMN_EMAIL, profile.email);
-            values.put(COLUMN_FIRST_NAME, profile.name.first);
-            values.put(COLUMN_LAST_NAME, profile.name.last);
-            values.put(COLUMN_HEX_COLOR, profile.hexColor);
-            values.put(COLUMN_DATE_OF_BIRTH, profile.dateOfBirth.getTime());
-            values.put(COLUMN_AVATAR, profile.avatar);
-            if (profile.bio != null) values.put(COLUMN_BIO, profile.bio);
+            values.put(COLUMN_EMAIL, profile.email());
+            values.put(COLUMN_FIRST_NAME, profile.name().first());
+            values.put(COLUMN_LAST_NAME, profile.name().last());
+            values.put(COLUMN_HEX_COLOR, profile.hexColor());
+            values.put(COLUMN_DATE_OF_BIRTH, profile.dateOfBirth().getTime());
+            values.put(COLUMN_AVATAR, profile.avatar());
+            if (profile.bio() != null) values.put(COLUMN_BIO, profile.bio());
             return values;
         }
 
         public static Profile parseCursor(Cursor cursor) {
-            Profile profile = new Profile();
-            profile.email = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EMAIL));
-            profile.name = new Name();
-            profile.name.first = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FIRST_NAME));
-            profile.name.last = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LAST_NAME));
-            profile.hexColor = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_HEX_COLOR));
+            Name name = Name.create(
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FIRST_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LAST_NAME)));
             long dobTime = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DATE_OF_BIRTH));
-            profile.dateOfBirth = new Date(dobTime);
-            profile.avatar = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_AVATAR));
-            profile.bio = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIO));
-            return profile;
+
+            return Profile.builder()
+                    .setName(name)
+                    .setEmail(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EMAIL)))
+                    .setHexColor(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_HEX_COLOR)))
+                    .setDateOfBirth(new Date(dobTime))
+                    .setAvatar(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_AVATAR)))
+                    .setBio(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIO)))
+                    .build();
         }
     }
 }

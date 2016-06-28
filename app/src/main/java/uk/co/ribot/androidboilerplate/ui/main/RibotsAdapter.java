@@ -40,10 +40,10 @@ public class RibotsAdapter extends RecyclerView.Adapter<RibotsAdapter.RibotViewH
     @Override
     public void onBindViewHolder(final RibotViewHolder holder, int position) {
         Ribot ribot = mRibots.get(position);
-        holder.hexColorView.setBackgroundColor(Color.parseColor(ribot.profile.hexColor));
+        holder.hexColorView.setBackgroundColor(Color.parseColor(ribot.profile().hexColor()));
         holder.nameTextView.setText(String.format("%s %s",
-                ribot.profile.name.first, ribot.profile.name.last));
-        holder.emailTextView.setText(ribot.profile.email);
+                ribot.profile().name().first(), ribot.profile().name().last()));
+        holder.emailTextView.setText(ribot.profile().email());
     }
 
     @Override

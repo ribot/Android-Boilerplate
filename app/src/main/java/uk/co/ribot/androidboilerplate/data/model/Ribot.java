@@ -1,61 +1,28 @@
 package uk.co.ribot.androidboilerplate.data.model;
 
-import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
-public class Ribot implements Comparable<Ribot>, Parcelable {
+import com.google.auto.value.AutoValue;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 
-    public Profile profile;
+@AutoValue
+public abstract class Ribot implements Comparable<Ribot>, Parcelable {
 
-    public Ribot() {
+    public abstract Profile profile();
+
+    public static Ribot create(Profile profile) {
+        return new AutoValue_Ribot(profile);
     }
 
-    public Ribot(Profile profile) {
-        this.profile = profile;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Ribot ribot = (Ribot) o;
-
-        return !(profile != null ? !profile.equals(ribot.profile) : ribot.profile != null);
+    public static TypeAdapter<Ribot> typeAdapter(Gson gson) {
+        return new AutoValue_Ribot.GsonTypeAdapter(gson);
     }
 
     @Override
-    public int hashCode() {
-        return profile != null ? profile.hashCode() : 0;
+    public int compareTo(@NonNull Ribot another) {
+        return profile().name().first().compareToIgnoreCase(another.profile().name().first());
     }
-
-    @Override
-    public int compareTo(Ribot another) {
-        return profile.name.first.compareToIgnoreCase(another.profile.name.first);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(this.profile, 0);
-    }
-
-    protected Ribot(Parcel in) {
-        this.profile = in.readParcelable(Profile.class.getClassLoader());
-    }
-
-    public static final Parcelable.Creator<Ribot> CREATOR = new Parcelable.Creator<Ribot>() {
-        public Ribot createFromParcel(Parcel source) {
-            return new Ribot(source);
-        }
-
-        public Ribot[] newArray(int size) {
-            return new Ribot[size];
-        }
-    };
 }
 

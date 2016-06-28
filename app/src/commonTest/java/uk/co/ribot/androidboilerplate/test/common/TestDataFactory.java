@@ -20,7 +20,7 @@ public class TestDataFactory {
     }
 
     public static Ribot makeRibot(String uniqueSuffix) {
-        return new Ribot(makeProfile(uniqueSuffix));
+        return Ribot.create(makeProfile(uniqueSuffix));
     }
 
     public static List<Ribot> makeListRibots(int number) {
@@ -32,21 +32,18 @@ public class TestDataFactory {
     }
 
     public static Profile makeProfile(String uniqueSuffix) {
-        Profile profile = new Profile();
-        profile.email = "email" + uniqueSuffix + "@ribot.co.uk";
-        profile.name = makeName(uniqueSuffix);
-        profile.dateOfBirth = new Date();
-        profile.hexColor = "#0066FF";
-        profile.avatar = "http://api.ribot.io/images/" + uniqueSuffix;
-        profile.bio = randomUuid();
-        return profile;
+        return Profile.builder()
+                .setName(makeName(uniqueSuffix))
+                .setEmail("email" + uniqueSuffix + "@ribot.co.uk")
+                .setDateOfBirth(new Date())
+                .setHexColor("#0066FF")
+                .setAvatar("http://api.ribot.io/images/" + uniqueSuffix)
+                .setBio(randomUuid())
+                .build();
     }
 
     public static Name makeName(String uniqueSuffix) {
-        Name name = new Name();
-        name.first = "Name-" + uniqueSuffix;
-        name.last = "Surname-" + uniqueSuffix;
-        return name;
+        return Name.create("Name-" + uniqueSuffix, "Surname-" + uniqueSuffix);
     }
 
 }
