@@ -117,11 +117,13 @@ dependencies {
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     apt     "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
 
-    compile "com.google.auto.value:auto-value:$AUTO_VALUE_VERSION"
-    apt     "com.google.auto.value:auto-value:$AUTO_VALUE_VERSION"
-    apt     'com.ryanharter.auto.value:auto-value-parcel:0.2.3-rc2'
-    apt     'com.ryanharter.auto.value:auto-value-gson:0.3.2-rc1'
-    apt     'com.squareup:javapoet:1.7.0' // https://github.com/rharter/auto-value-parcel/issues/64
+    // Replace provided dependency below with official AutoValue once this issue is fixed
+    // https://github.com/google/auto/issues/268
+    provided 'com.jakewharton.auto.value:auto-value-annotations:1.2-update1'
+    apt      "com.google.auto.value:auto-value:$AUTO_VALUE_VERSION"
+    apt      'com.ryanharter.auto.value:auto-value-parcel:0.2.3-rc2'
+    apt      'com.ryanharter.auto.value:auto-value-gson:0.3.2-rc1'
+    apt      'com.squareup:javapoet:1.7.0' // https://github.com/rharter/auto-value-parcel/issues/64
 
     compile  "com.google.dagger:dagger:$DAGGER_VERSION"
     provided 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
