@@ -21,8 +21,9 @@ Libraries and tools included:
 
 ## Requirements
 
+- JDK 1.8
 - [Android SDK](http://developer.android.com/sdk/index.html).
-- Android [6.0 (API 23) ](http://developer.android.com/tools/revisions/platforms.html#6.0).
+- Android N [(API 24) ](http://developer.android.com/tools/revisions/platforms.html).
 - Latest Android SDK Tools and build tools.
 
 
