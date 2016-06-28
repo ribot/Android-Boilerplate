@@ -79,7 +79,7 @@ play {
 }
 
 dependencies {
-    final PLAY_SERVICES_VERSION = '8.4.0'
+    final PLAY_SERVICES_VERSION = '9.2.0'
     final SUPPORT_LIBRARY_VERSION = '24.0.0'
     final RETROFIT_VERSION = '2.0.0'
     final DAGGER_VERSION = '2.4'
