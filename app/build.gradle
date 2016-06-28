@@ -153,7 +153,7 @@ dependencies {
     testCompile "org.hamcrest:hamcrest-core:$HAMCREST_VERSION"
     testCompile "org.hamcrest:hamcrest-library:$HAMCREST_VERSION"
     testCompile "org.hamcrest:hamcrest-integration:$HAMCREST_VERSION"
-    testCompile 'org.robolectric:robolectric:3.0'
+    testCompile 'org.robolectric:robolectric:3.1'
 }
 
 // Log out test results to console
