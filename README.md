@@ -13,6 +13,7 @@ Libraries and tools included:
 - [Butterknife](https://github.com/JakeWharton/butterknife)
 - [Timber](https://github.com/JakeWharton/timber)
 - [Glide](https://github.com/bumptech/glide)
+- [AutoValue](https://github.com/google/auto/tree/master/value) with extensions [AutoValueParcel](https://github.com/rharter/auto-value-parcel) and [AutoValueGson](https://github.com/rharter/auto-value-gson)
 - Functional tests with [Espresso](https://google.github.io/android-testing-support-library/docs/espresso/index.html)
 - [Robolectric](http://robolectric.org/)
 - [Mockito](http://mockito.org/)
