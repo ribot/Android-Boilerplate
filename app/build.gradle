@@ -82,7 +82,7 @@ dependencies {
     final PLAY_SERVICES_VERSION = '9.2.0'
     final SUPPORT_LIBRARY_VERSION = '24.0.0'
     final RETROFIT_VERSION = '2.1.0'
-    final DAGGER_VERSION = '2.4'
+    final DAGGER_VERSION = '2.5'
     final DEXMAKER_VERSION = '1.4'
     final HAMCREST_VERSION = '1.3'
     final ESPRESSO_VERSION = '2.2.1'
