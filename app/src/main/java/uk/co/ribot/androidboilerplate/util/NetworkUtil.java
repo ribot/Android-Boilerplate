@@ -24,4 +24,41 @@ public class NetworkUtil {
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
+    /**
+     * Returns an {@link Interceptor} instance that appends the query parameter
+     * passed as an argument to every request made.
+     *
+     * <p>This method should be used whilst building an OkHttpClient instance that needs
+     * to append a query parameter for every api call (e.g. Api Keys).
+     * To build such OkHttpClient follow the next example:</p>
+     *
+     * OkHttpClient = new OkHttpClient.Builder()
+     *      .addInterceptor(NetworkUtil.makeQueryInterceptor(key, value))
+     *      .build();
+     *
+     * @param key A string containing the key associated with the query parameter
+     * @param value A string containing the value of the query parameter
+     * @return An Interceptor that adds the query parameter to each api call
+     */
+    @NonNull
+    public static Interceptor makeQueryInterceptor(final String key, final String value) {
+        return new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request originalRequest = chain.request();
+                HttpUrl originalUrl = originalRequest.url();
+
+                HttpUrl newUrl = originalUrl.newBuilder()
+                        .addQueryParameter(key, value)
+                        .build();
+
+                Request.Builder newBuilder = originalRequest.newBuilder()
+                        .url(newUrl);
+
+                Request newRequest = newBuilder.build();
+                return chain.proceed(newRequest);
+            }
+        };
+    }
+
 }
