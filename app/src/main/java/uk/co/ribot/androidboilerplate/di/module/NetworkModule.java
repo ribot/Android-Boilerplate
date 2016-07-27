@@ -1,6 +1,5 @@
 package uk.co.ribot.androidboilerplate.di.module;
 
-import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ryanharter.auto.value.gson.AutoValueGsonTypeAdapterFactory;
@@ -29,7 +28,7 @@ import uk.co.ribot.androidboilerplate.data.remote.ApiService;
         .create();
   }
 
-  @Singleton @Provides OkHttpClient provideOkHttpClient(Context context) {
+  @Singleton @Provides OkHttpClient provideOkHttpClient() {
     HttpLoggingInterceptor loggingInterceptor =
         new HttpLoggingInterceptor(message -> Timber.d(message));
     loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -48,6 +47,10 @@ import uk.co.ribot.androidboilerplate.data.remote.ApiService;
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .build();
   }
+
+  /* --------------------------------------------------- */
+  /* > Retrofit Interfaces*/
+  /* --------------------------------------------------- */
 
   @Singleton @Provides public static ApiService provideApiService(Retrofit retrofit) {
     return retrofit.create(ApiService.class);

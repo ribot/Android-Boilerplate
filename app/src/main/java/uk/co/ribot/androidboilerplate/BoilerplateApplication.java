@@ -1,11 +1,12 @@
 package uk.co.ribot.androidboilerplate;
 
 import android.app.Application;
-import android.content.Context;
 import com.crashlytics.android.Crashlytics;
 import com.incendiary.androidcommon.AndroidCommon;
+import com.incendiary.androidcommon.android.ContextProvider;
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
+import uk.co.ribot.androidboilerplate.data.local.Preferences;
 import uk.co.ribot.androidboilerplate.di.component.ApplicationComponent;
 import uk.co.ribot.androidboilerplate.di.component.DaggerApplicationComponent;
 import uk.co.ribot.androidboilerplate.di.module.ApplicationModule;
@@ -21,7 +22,13 @@ public class BoilerplateApplication extends Application {
       Timber.plant(new Timber.DebugTree());
       Fabric.with(this, new Crashlytics());
     }
+
+    setupStorage();
     setupAndroidCommon();
+  }
+
+  private void setupStorage() {
+    Preferences.setup(this);
   }
 
   private void setupAndroidCommon() {
@@ -29,11 +36,19 @@ public class BoilerplateApplication extends Application {
     AndroidCommon.with(this).enableStricMode(isDebug).install();
   }
 
-  public static BoilerplateApplication get(Context context) {
-    return (BoilerplateApplication) context.getApplicationContext();
+  /* --------------------------------------------------- */
+  /* > AppComponent */
+  /* --------------------------------------------------- */
+
+  public static BoilerplateApplication get(){
+    return (BoilerplateApplication) ContextProvider.get();
   }
 
-  public ApplicationComponent getComponent() {
+  public static ApplicationComponent component() {
+    return get().getComponent();
+  }
+
+  private ApplicationComponent getComponent() {
     if (mApplicationComponent == null) {
       mApplicationComponent = DaggerApplicationComponent.builder()
           .applicationModule(new ApplicationModule(this))

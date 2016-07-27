@@ -115,6 +115,7 @@ dependencies {
   compile "com.squareup.okhttp3:okhttp:$OKHTTP_VERSION"
   compile "com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION"
 
+  compile 'com.github.orhanobut:hawk:1.23'
   compile 'com.github.esafirm:androidcommon:0.2.6'
   compile 'com.github.bumptech.glide:glide:3.7.0'
   compile 'io.reactivex:rxandroid:1.2.1'

@@ -11,7 +11,6 @@ import rx.Observable;
 import rx.observers.TestSubscriber;
 import uk.co.ribot.androidboilerplate.data.DataManager;
 import uk.co.ribot.androidboilerplate.data.local.DatabaseHelper;
-import uk.co.ribot.androidboilerplate.data.local.PreferencesHelper;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
 import uk.co.ribot.androidboilerplate.data.remote.ApiService;
 import uk.co.ribot.androidboilerplate.test.common.TestDataFactory;
@@ -32,12 +31,11 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class) public class DataManagerTest {
 
   @Mock DatabaseHelper mMockDatabaseHelper;
-  @Mock PreferencesHelper mMockPreferencesHelper;
   @Mock ApiService mMockApiService;
   private DataManager mDataManager;
 
   @Before public void setUp() {
-    mDataManager = new DataManager(mMockApiService, mMockPreferencesHelper, mMockDatabaseHelper);
+    mDataManager = new DataManager(mMockApiService, mMockDatabaseHelper);
   }
 
   @Test public void syncRibotsEmitsValues() {

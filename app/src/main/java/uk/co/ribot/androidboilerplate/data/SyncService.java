@@ -31,7 +31,7 @@ public class SyncService extends Service {
 
   @Override public void onCreate() {
     super.onCreate();
-    BoilerplateApplication.get(this).getComponent().inject(this);
+    BoilerplateApplication.component().inject(this);
   }
 
   @Override public int onStartCommand(Intent intent, int flags, final int startId) {

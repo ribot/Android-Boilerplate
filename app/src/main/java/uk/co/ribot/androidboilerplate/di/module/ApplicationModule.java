@@ -4,9 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
-import javax.inject.Singleton;
-import retrofit2.Retrofit;
-import uk.co.ribot.androidboilerplate.data.remote.ApiService;
 import uk.co.ribot.androidboilerplate.di.ApplicationContext;
 
 /**
@@ -25,9 +22,5 @@ import uk.co.ribot.androidboilerplate.di.ApplicationContext;
 
   @Provides @ApplicationContext Context provideContext() {
     return mApplication;
-  }
-
-  @Provides @Singleton ApiService provideRibotsService(Retrofit retrofit) {
-    return ApiService.Creator.newRibotsService(retrofit);
   }
 }

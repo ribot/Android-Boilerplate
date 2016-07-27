@@ -24,9 +24,8 @@ public class TestComponentRule implements TestRule {
 
   public TestComponentRule(Context context) {
     mContext = context;
-    BoilerplateApplication application = BoilerplateApplication.get(context);
     mTestComponent = DaggerTestComponent.builder()
-        .applicationTestModule(new ApplicationTestModule(application))
+        .applicationTestModule(new ApplicationTestModule(BoilerplateApplication.get()))
         .build();
   }
 
@@ -41,7 +40,7 @@ public class TestComponentRule implements TestRule {
   @Override public Statement apply(final Statement base, Description description) {
     return new Statement() {
       @Override public void evaluate() throws Throwable {
-        BoilerplateApplication application = BoilerplateApplication.get(mContext);
+        BoilerplateApplication application = BoilerplateApplication.get();
         application.setComponent(mTestComponent);
         base.evaluate();
         application.setComponent(null);
