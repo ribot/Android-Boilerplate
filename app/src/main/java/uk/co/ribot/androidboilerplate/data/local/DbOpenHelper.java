@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import uk.co.ribot.androidboilerplate.injection.ApplicationContext;
+import uk.co.ribot.androidboilerplate.di.ApplicationContext;
 
 @Singleton
 public class DbOpenHelper extends SQLiteOpenHelper {

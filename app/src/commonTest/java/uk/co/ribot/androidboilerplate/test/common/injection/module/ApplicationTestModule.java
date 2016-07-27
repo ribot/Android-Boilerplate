@@ -8,8 +8,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import uk.co.ribot.androidboilerplate.data.DataManager;
-import uk.co.ribot.androidboilerplate.data.remote.RibotsService;
-import uk.co.ribot.androidboilerplate.injection.ApplicationContext;
+import uk.co.ribot.androidboilerplate.data.remote.ApiService;
+import uk.co.ribot.androidboilerplate.di.ApplicationContext;
 
 import static org.mockito.Mockito.mock;
 
@@ -46,9 +46,8 @@ public class ApplicationTestModule {
     }
 
     @Provides
-    @Singleton
-    RibotsService provideRibotsService() {
-        return mock(RibotsService.class);
+    @Singleton ApiService provideRibotsService() {
+        return mock(ApiService.class);
     }
 
 }

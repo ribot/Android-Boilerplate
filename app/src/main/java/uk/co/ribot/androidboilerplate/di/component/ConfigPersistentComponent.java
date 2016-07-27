@@ -1,8 +1,8 @@
-package uk.co.ribot.androidboilerplate.injection.component;
+package uk.co.ribot.androidboilerplate.di.component;
 
 import dagger.Component;
-import uk.co.ribot.androidboilerplate.injection.ConfigPersistent;
-import uk.co.ribot.androidboilerplate.injection.module.ActivityModule;
+import uk.co.ribot.androidboilerplate.di.ConfigPersistent;
+import uk.co.ribot.androidboilerplate.di.module.ActivityModule;
 import uk.co.ribot.androidboilerplate.ui.base.BaseActivity;
 
 /**
@@ -12,10 +12,7 @@ import uk.co.ribot.androidboilerplate.ui.base.BaseActivity;
  * Use the {@link ConfigPersistent} scope to annotate dependencies that need to survive
  * configuration changes (for example Presenters).
  */
-@ConfigPersistent
-@Component(dependencies = ApplicationComponent.class)
+@ConfigPersistent @Component(dependencies = ApplicationComponent.class)
 public interface ConfigPersistentComponent {
-
-    ActivityComponent activityComponent(ActivityModule activityModule);
-
+  ActivityComponent activityComponent(ActivityModule activityModule);
 }

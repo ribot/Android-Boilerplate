@@ -1,11 +1,11 @@
-package uk.co.ribot.androidboilerplate.injection;
+package uk.co.ribot.androidboilerplate.di;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Scope;
 
-import uk.co.ribot.androidboilerplate.injection.component.ConfigPersistentComponent;
+import uk.co.ribot.androidboilerplate.di.component.ConfigPersistentComponent;
 
 /**
  * A scoping annotation to permit dependencies conform to the life of the
