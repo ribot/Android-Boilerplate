@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!--ScrollView-->
+  <item name="scrollView" type="id"/>
+  <item name="scrollContainer" type="id"/>
+
+  <!--Toolbar-->
+  <item name="toolbar" type="id"/>
+
+  <!--General-->
+  <item name="revealView" type="id"/>
+  <item name="cardView" type="id"/>
+
+  <!--Switch-->
+  <item name="switchView" type="id"/>
+
+  <!--Pager-->
+  <item name="pager" type="id"/>
+
+  <!--SwipeRefreshLayout-->
+  <item name="swipeRefreshView" type="id"/>
+
+  <!--Layout-->
+  <item name="lyTop" type="id"/>
+  <item name="lyMiddle" type="id"/>
+  <item name="lyBottom" type="id"/>
+
+  <!--TextView-->
+  <item name="txtTitle" type="id"/>
+  <item name="txtSubTitle" type="id"/>
+  <item name="txtDesc" type="id"/>
+  <item name="txtTotalClient" type="id"/>
+  <item name="txtTotalPemasukan" type="id"/>
+  <item name="txtName" type="id"/>
+  <item name="txtEmail" type="id"/>
+  <item name="txtPhoneMobile" type="id"/>
+  <item name="txtPhone" type="id"/>
+  <item name="txtArea" type="id"/>
+  <item name="txtContent" type="id"/>
+  <item name="txtCaption" type="id"/>
+  <item name="txtDate" type="id"/>
+  <item name="txtTime" type="id"/>
+  <item name="txtAmount" type="id"/>
+  <item name="txtComplete" type="id"/>
+  <item name="txtNoData" type="id"/>
+  <item name="txtTags" type="id"/>
+  <item name="txtDistance" type="id"/>
+  <item name="txtSkip" type="id"/>
+  <item name="txtLabel" type="id"/>
+  <item name="txtAddress" type="id"/>
+  <item name="txtRegister" type="id"/>
+
+  <!--EditText-->
+  <item name="inpContent" type="id"/>
+  <item name="inpUsername" type="id"/>
+  <item name="inpPassword" type="id"/>
+  <item name="inpConfirmPassword" type="id"/>
+  <item name="inpSearch" type="id"/>
+  <item name="inpTitle" type="id"/>
+  <item name="inpComment" type="id"/>
+  <item name="inpPlace" type="id"/>
+  <item name="inpPhone" type="id"/>
+  <item name="inpEmail" type="id"/>
+  <item name="inpName" type="id"/>
+
+  <!--Button-->
+  <item name="btnShare" type="id"/>
+  <item name="btnLike" type="id"/>
+  <item name="btnMember" type="id"/>
+  <item name="btnComment" type="id"/>
+  <item name="btnLeave" type="id"/>
+  <item name="btnSubmit" type="id"/>
+  <item name="btnDone" type="id"/>
+  <item name="btnRandom" type="id"/>
+  <item name="btnClear" type="id"/>
+  <item name="btnMore" type="id"/>
+  <item name="btnCamera" type="id"/>
+  <item name="btnExpand" type="id"/>
+  <item name="btnSearch" type="id"/>
+  <item name="btnSetting" type="id"/>
+  <item name="btnInfo" type="id"/>
+
+  <!--Floating Button-->
+  <item name="fab" type="id"/>
+
+  <!--VideoView-->
+  <item name="videoView" type="id"/>
+
+  <!--Progressbar-->
+  <item name="pbLoad" type="id"/>
+  <item name="pbLoadMore" type="id"/>
+  <item name="pbSeekBar" type="id"/>
+
+  <!--ImageView-->
+  <item name="imgHeader" type="id"/>
+  <item name="imgContent" type="id"/>
+  <item name="imgIndicator" type="id"/>
+  <item name="imgAvatar" type="id"/>
+  <item name="imgLabel" type="id"/>
+  <item name="imgBottom" type="id"/>
+
+  <!--ListView-->
+  <item name="listView" type="id"/>
+
+  <!--CheckBox-->
+  <item name="checkBox" type="id"/>
+
+  <!--Spinner-->
+  <item name="spinner" type="id"/>
+
+  <!--NavigationView-->
+  <item name="navView" type="id"/>
+
+  <!--ETC-->
+  <item name="container" type="id"/>
+  <item name="divider" type="id"/>
+  <item name="shadow" type="id"/>
+  <item name="indicator" type="id"/>
+
+</resources>
