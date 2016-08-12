@@ -1,0 +1,27 @@
+ext {
+  buildVersionCode = {
+
+    //The rules is as follows:
+    //-SNAPSHOT counts as 0
+    //-RC* counts as the RC number, i.e. 1 to 98
+    //final release counts as 99.
+    //Thus you can only have 98 Release Candidates, which ought to be enough for everyone
+
+    def candidate = "99"
+    def (major, minor, patch) = appVersion.toLowerCase().replaceAll('-', '').tokenize('.')
+    if (patch.endsWith("snapshot")) {
+      candidate = "0"
+      patch = patch.replaceAll("[^0-9]", "")
+    } else {
+      def rc
+      (patch, rc) = patch.tokenize("rc")
+      if (rc) {
+        candidate = rc
+      }
+    }
+
+    (major, minor, patch, candidate) = [major, minor, patch, candidate].collect { it.toInteger() }
+
+    (major * 1000000) + (minor * 10000) + (patch * 100) + candidate;
+  }
+}

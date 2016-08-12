@@ -1,164 +1,175 @@
 apply plugin: 'com.android.application'
-apply from: '../config/quality/quality.gradle'
 apply plugin: 'com.github.triplet.play'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+apply from: '../config/quality/quality.gradle'
+apply from: 'versioning.gradle'
 //TODO uncomment line below after adding fabric api secret and key to fabric.properties
 //apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '24'
+  compileSdkVersion 24
+  buildToolsVersion '24'
 
-    defaultConfig {
-        applicationId 'uk.co.ribot.androidboilerplate'
-        minSdkVersion 16
-        targetSdkVersion 24
-        testInstrumentationRunner "${applicationId}.runner.RxAndroidJUnitRunner"
-        versionCode 1000
-        // Major -> Millions, Minor -> Thousands, Bugfix -> Hundreds. E.g 1.3.72 == 1,003,072
-        versionName '0.1.0'
+  defaultConfig {
+    applicationId 'uk.co.ribot.androidboilerplate'
+    minSdkVersion 16
+    targetSdkVersion 24
+    testInstrumentationRunner "${applicationId}.runner.RxAndroidJUnitRunner"
+    versionCode buildVersionCode()
+    versionName appVersion
+  }
+
+  signingConfigs {
+    // You must set up an environment var before release signing
+    // Run: export APP_KEY={password}
+    // TODO Add your release keystore in /keystore folder
+    release {
+      storeFile file('keystore/release.keystore')
+      keyAlias 'esa'
+      storePassword "$System.env.APP_KEY"
+      keyPassword "$System.env.APP_KEY"
     }
 
-    signingConfigs {
-        // You must set up an environment var before release signing
-        // Run: export APP_KEY={password}
-        // TODO Add your release keystore in /keystore folder
-        release {
-            storeFile file('keystore/release.keystore')
-            keyAlias 'alias'
-            storePassword "$System.env.APP_KEY"
-            keyPassword "$System.env.APP_KEY"
-        }
+    debug {
+      storeFile file('keystore/debug.keystore')
+      keyAlias 'androiddebugkey'
+      storePassword 'android'
+      keyPassword 'android'
+    }
+  }
 
-        debug {
-            storeFile file('keystore/debug.keystore')
-            keyAlias 'androiddebugkey'
-            storePassword 'android'
-            keyPassword 'android'
-        }
+  buildTypes {
+    release {
+      signingConfig signingConfigs.release
+
+      minifyEnabled true
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+      ext.betaDistributionReleaseNotesFilePath =
+          file('../crashlytics_release_notes.txt').absolutePath
     }
 
-    buildTypes {
-        release {
-            signingConfig signingConfigs.release
-
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
-            ext.betaDistributionReleaseNotesFilePath =
-                    file('../crashlytics_release_notes.txt').absolutePath
-        }
-
-        debug {
-            versionNameSuffix " Debug"
-            debuggable true
-        }
+    debug {
+      versionNameSuffix " Debug"
+      debuggable true
     }
 
-    sourceSets {
-        def commonTestDir = 'src/commonTest/java'
-        test {
-            java.srcDir commonTestDir
-        }
-        androidTest {
-            java.srcDir commonTestDir
-        }
+    compileOptions {
+      sourceCompatibility JavaVersion.VERSION_1_8
+      targetCompatibility JavaVersion.VERSION_1_8
     }
+  }
 
-    //Needed because of this https://github.com/square/okio/issues/58
-    lintOptions {
-        warning 'InvalidPackage'
+  sourceSets {
+    def commonTestDir = 'src/commonTest/java'
+    test {
+      java.srcDir commonTestDir
     }
+    androidTest {
+      java.srcDir commonTestDir
+    }
+  }
+
+  //Needed because of this https://github.com/square/okio/issues/58
+  lintOptions {
+    warning 'InvalidPackage'
+  }
 }
 
 play {
-    serviceAccountEmail = 'your-service-account-email'
-    pk12File = file('key.p12')
-    // By default publishes to Alpha channel
-    track = 'alpha'
+  serviceAccountEmail = 'your-service-account-email'
+  pk12File = file('key.p12')
+  // By default publishes to Alpha channel
+  track = 'alpha'
 }
 
 dependencies {
-    final PLAY_SERVICES_VERSION = '9.2.0'
-    final SUPPORT_LIBRARY_VERSION = '24.0.0'
-    final RETROFIT_VERSION = '2.1.0'
-    final DAGGER_VERSION = '2.5'
-    final DEXMAKER_VERSION = '1.4'
-    final HAMCREST_VERSION = '1.3'
-    final ESPRESSO_VERSION = '2.2.1'
-    final RUNNER_VERSION = '0.4'
-    final BUTTERKNIFE_VERSION = '8.1.0'
-    final AUTO_VALUE_VERSION = '1.2'
+  final PLAY_SERVICES_VERSION = '9.2.1'
+  final SUPPORT_LIBRARY_VERSION = '24.1.1'
+  final RETROFIT_VERSION = '2.1.0'
+  final DAGGER_VERSION = '2.5'
+  final DEXMAKER_VERSION = '1.4'
+  final HAMCREST_VERSION = '1.3'
+  final ESPRESSO_VERSION = '2.2.1'
+  final RUNNER_VERSION = '0.4'
+  final BUTTERKNIFE_VERSION = '8.1.0'
+  final AUTO_VALUE_VERSION = '1.2'
+  final OKHTTP_VERSION = '3.4.1'
 
-    def daggerCompiler = "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
-    def jUnit = "junit:junit:4.12"
-    def mockito = "org.mockito:mockito-core:1.10.19"
+  def daggerCompiler = "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+  def jUnit = "junit:junit:4.12"
+  def mockito = "org.mockito:mockito-core:1.10.19"
 
-    // App Dependencies
-    compile "com.google.android.gms:play-services-gcm:$PLAY_SERVICES_VERSION"
-    compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
-    compile "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION"
-    compile "com.android.support:cardview-v7:$SUPPORT_LIBRARY_VERSION"
-    compile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
+  // App Dependencies
+  compile "com.google.android.gms:play-services-gcm:$PLAY_SERVICES_VERSION"
+  compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
+  compile "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION"
+  compile "com.android.support:cardview-v7:$SUPPORT_LIBRARY_VERSION"
+  compile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
 
-    compile 'com.squareup.sqlbrite:sqlbrite:0.5.0'
-    compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
-    compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
-    compile "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
+  compile 'com.squareup.sqlbrite:sqlbrite:0.5.0'
+  compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+  compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+  compile "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
+  compile "com.squareup.okhttp3:okhttp:$OKHTTP_VERSION"
+  compile "com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION"
 
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.1.6'
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.7@aar') {
-        transitive = true;
-    }
+  compile 'com.github.orhanobut:hawk:1.23'
+  compile 'com.github.esafirm:androidcommon:0.2.6'
+  compile 'com.github.bumptech.glide:glide:3.7.0'
+  compile 'io.reactivex:rxandroid:1.2.1'
+  compile 'io.reactivex:rxjava:1.1.6'
+  compile('com.crashlytics.sdk.android:crashlytics:2.5.7@aar') {
+    transitive = true;
+  }
 
-    compile 'com.jakewharton.timber:timber:4.1.2'
-    compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
-    apt     "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
+  compile 'com.jakewharton.timber:timber:4.1.2'
+  compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
+  apt "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
 
-    // Replace provided dependency below with official AutoValue once this issue is fixed
-    // https://github.com/google/auto/issues/268
-    provided 'com.jakewharton.auto.value:auto-value-annotations:1.2-update1'
-    apt      "com.google.auto.value:auto-value:$AUTO_VALUE_VERSION"
-    apt      'com.ryanharter.auto.value:auto-value-parcel:0.2.3-rc2'
-    apt      'com.ryanharter.auto.value:auto-value-gson:0.3.2-rc1'
-    apt      'com.squareup:javapoet:1.7.0' // https://github.com/rharter/auto-value-parcel/issues/64
+  // Replace provided dependency below with official AutoValue once this issue is fixed
+  // https://github.com/google/auto/issues/268
+  provided 'com.jakewharton.auto.value:auto-value-annotations:1.2-update1'
+  apt "com.google.auto.value:auto-value:$AUTO_VALUE_VERSION"
+  apt 'com.ryanharter.auto.value:auto-value-parcel:0.2.3-rc2'
+  apt 'com.ryanharter.auto.value:auto-value-gson:0.3.2-rc1'
+  apt 'com.squareup:javapoet:1.7.0' // https://github.com/rharter/auto-value-parcel/issues/64
 
-    compile  "com.google.dagger:dagger:$DAGGER_VERSION"
-    provided 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
-    apt daggerCompiler
-    testApt daggerCompiler
-    androidTestApt daggerCompiler
+  compile "com.google.dagger:dagger:$DAGGER_VERSION"
+  provided 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
+  apt daggerCompiler
+  testApt daggerCompiler
+  androidTestApt daggerCompiler
 
-    // Instrumentation test dependencies
-    androidTestCompile jUnit
-    androidTestCompile mockito
-    androidTestCompile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
-    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$ESPRESSO_VERSION") {
-        exclude group: 'com.android.support', module: 'appcompat'
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude group: 'com.android.support', module: 'recyclerview-v7'
-    }
-    androidTestCompile "com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION"
-    androidTestCompile "com.android.support.test:runner:$RUNNER_VERSION"
-    androidTestCompile "com.android.support.test:rules:$RUNNER_VERSION"
-    androidTestCompile "com.crittercism.dexmaker:dexmaker:$DEXMAKER_VERSION"
-    androidTestCompile "com.crittercism.dexmaker:dexmaker-dx:$DEXMAKER_VERSION"
-    androidTestCompile "com.crittercism.dexmaker:dexmaker-mockito:$DEXMAKER_VERSION"
+  // Instrumentation test dependencies
+  androidTestCompile jUnit
+  androidTestCompile mockito
+  androidTestCompile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
+  androidTestCompile("com.android.support.test.espresso:espresso-contrib:$ESPRESSO_VERSION") {
+    exclude group: 'com.android.support', module: 'appcompat'
+    exclude group: 'com.android.support', module: 'support-v4'
+    exclude group: 'com.android.support', module: 'recyclerview-v7'
+  }
+  androidTestCompile "com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION"
+  androidTestCompile "com.android.support.test:runner:$RUNNER_VERSION"
+  androidTestCompile "com.android.support.test:rules:$RUNNER_VERSION"
+  androidTestCompile "com.crittercism.dexmaker:dexmaker:$DEXMAKER_VERSION"
+  androidTestCompile "com.crittercism.dexmaker:dexmaker-dx:$DEXMAKER_VERSION"
+  androidTestCompile "com.crittercism.dexmaker:dexmaker-mockito:$DEXMAKER_VERSION"
 
-    // Unit tests dependencies
-    testCompile jUnit
-    testCompile mockito
-    testCompile "org.hamcrest:hamcrest-core:$HAMCREST_VERSION"
-    testCompile "org.hamcrest:hamcrest-library:$HAMCREST_VERSION"
-    testCompile "org.hamcrest:hamcrest-integration:$HAMCREST_VERSION"
-    testCompile 'org.robolectric:robolectric:3.1'
+  // Unit tests dependencies
+  testCompile jUnit
+  testCompile mockito
+  testCompile "org.hamcrest:hamcrest-core:$HAMCREST_VERSION"
+  testCompile "org.hamcrest:hamcrest-library:$HAMCREST_VERSION"
+  testCompile "org.hamcrest:hamcrest-integration:$HAMCREST_VERSION"
+  testCompile 'org.robolectric:robolectric:3.1'
 }
 
 // Log out test results to console
-tasks.matching {it instanceof Test}.all {
-    testLogging.events = ["failed", "passed", "skipped"]
+tasks.matching { it instanceof Test }.all {
+  testLogging.events = ["failed", "passed", "skipped"]
 }
 
 
