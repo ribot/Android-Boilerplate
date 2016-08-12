@@ -3,7 +3,7 @@ package com.incendiary.androidboilerplate.di.component;
 import dagger.Component;
 import com.incendiary.androidboilerplate.di.ConfigPersistent;
 import com.incendiary.androidboilerplate.di.module.ActivityModule;
-import com.incendiary.androidboilerplate.ui.base.BaseActivity;
+import com.incendiary.androidboilerplate.features.common.BaseActivity;
 
 /**
  * A dagger component that will live during the lifecycle of an Activity but it won't

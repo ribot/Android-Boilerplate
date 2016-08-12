@@ -1,4 +1,4 @@
-package com.incendiary.androidboilerplate.ui.base;
+package com.incendiary.androidboilerplate.features.common;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

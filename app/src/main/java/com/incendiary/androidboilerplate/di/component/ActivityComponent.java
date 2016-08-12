@@ -3,7 +3,7 @@ package com.incendiary.androidboilerplate.di.component;
 import dagger.Subcomponent;
 import com.incendiary.androidboilerplate.di.PerActivity;
 import com.incendiary.androidboilerplate.di.module.ActivityModule;
-import com.incendiary.androidboilerplate.ui.main.MainActivity;
+import com.incendiary.androidboilerplate.features.main.MainActivity;
 
 /**
  * This component inject dependencies to all Activities across the application

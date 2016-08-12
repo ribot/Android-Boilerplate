@@ -1,4 +1,4 @@
-package com.incendiary.androidboilerplate.ui.base;
+package com.incendiary.androidboilerplate.features.common;
 
 /**
  * Base class that implements the Presenter interface and provides a base implementation for

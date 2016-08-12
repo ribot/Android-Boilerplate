@@ -1,4 +1,4 @@
-package com.incendiary.androidboilerplate.ui.main;
+package com.incendiary.androidboilerplate.features.main;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;

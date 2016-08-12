@@ -1,4 +1,4 @@
-package com.incendiary.androidboilerplate.ui.main;
+package com.incendiary.androidboilerplate.features.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import com.incendiary.androidboilerplate.R;
 import com.incendiary.androidboilerplate.data.SyncService;
 import com.incendiary.androidboilerplate.data.model.Ribot;
-import com.incendiary.androidboilerplate.ui.base.BaseActivity;
+import com.incendiary.androidboilerplate.features.common.BaseActivity;
 import com.incendiary.androidboilerplate.util.DialogFactory;
 
 public class MainActivity extends BaseActivity implements MainMvpView {

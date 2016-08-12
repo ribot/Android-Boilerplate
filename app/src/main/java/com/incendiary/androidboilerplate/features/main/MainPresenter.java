@@ -1,4 +1,4 @@
-package com.incendiary.androidboilerplate.ui.main;
+package com.incendiary.androidboilerplate.features.main;
 
 import java.util.List;
 import javax.inject.Inject;
@@ -10,7 +10,7 @@ import timber.log.Timber;
 import com.incendiary.androidboilerplate.data.DataManager;
 import com.incendiary.androidboilerplate.data.model.Ribot;
 import com.incendiary.androidboilerplate.di.ConfigPersistent;
-import com.incendiary.androidboilerplate.ui.base.BasePresenter;
+import com.incendiary.androidboilerplate.features.common.BasePresenter;
 import com.incendiary.androidboilerplate.util.RxUtil;
 
 @ConfigPersistent public class MainPresenter extends BasePresenter<MainMvpView> {

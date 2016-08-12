@@ -1,4 +1,4 @@
-package com.incendiary.androidboilerplate.ui.base;
+package com.incendiary.androidboilerplate.features.common;
 
 /**
  * Every presenter in the app must either implement this interface or extend BasePresenter

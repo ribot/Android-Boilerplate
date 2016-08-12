@@ -1,9 +1,9 @@
-package com.incendiary.androidboilerplate.ui.main;
+package com.incendiary.androidboilerplate.features.main;
 
 import java.util.List;
 
 import com.incendiary.androidboilerplate.data.model.Ribot;
-import com.incendiary.androidboilerplate.ui.base.MvpView;
+import com.incendiary.androidboilerplate.features.common.MvpView;
 
 public interface MainMvpView extends MvpView {
 

@@ -15,8 +15,8 @@ import rx.Observable;
 import com.incendiary.androidboilerplate.data.DataManager;
 import com.incendiary.androidboilerplate.data.model.Ribot;
 import com.incendiary.androidboilerplate.test.common.TestDataFactory;
-import com.incendiary.androidboilerplate.ui.main.MainMvpView;
-import com.incendiary.androidboilerplate.ui.main.MainPresenter;
+import com.incendiary.androidboilerplate.features.main.MainMvpView;
+import com.incendiary.androidboilerplate.features.main.MainPresenter;
 import com.incendiary.androidboilerplate.util.RxSchedulersOverrideRule;
 
 import static org.mockito.Matchers.anyListOf;

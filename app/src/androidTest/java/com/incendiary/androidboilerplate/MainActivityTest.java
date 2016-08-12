@@ -15,7 +15,7 @@ import rx.Observable;
 import com.incendiary.androidboilerplate.data.model.Ribot;
 import com.incendiary.androidboilerplate.test.common.TestComponentRule;
 import com.incendiary.androidboilerplate.test.common.TestDataFactory;
-import com.incendiary.androidboilerplate.ui.main.MainActivity;
+import com.incendiary.androidboilerplate.features.main.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
