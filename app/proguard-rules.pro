@@ -34,6 +34,7 @@
 -keep class retrofit.** { *; }
 -keepattributes Signature
 -keepattributes Exceptions
+-dontwarn retrofit2.Platform$Java8
 
 # OkHttp rules
 -dontwarn okio.**
