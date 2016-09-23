@@ -102,7 +102,6 @@ dependencies {
 
     compile 'com.squareup.sqlbrite:sqlbrite:0.5.0'
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
-    compile "com.squareup.okhttp3:okhttp:3.4.1"
     compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
 
@@ -120,10 +119,11 @@ dependencies {
     // Replace provided dependency below with official AutoValue once this issue is fixed
     // https://github.com/google/auto/issues/268
     provided 'com.jakewharton.auto.value:auto-value-annotations:1.2-update1'
-    annotationProcessor      "com.google.auto.value:auto-value:$AUTO_VALUE_VERSION"
-    annotationProcessor      'com.ryanharter.auto.value:auto-value-parcel:0.2.3-rc2'
-    annotationProcessor      'com.ryanharter.auto.value:auto-value-gson:0.3.2-rc1'
-    annotationProcessor      'com.squareup:javapoet:1.7.0' // https://github.com/rharter/auto-value-parcel/issues/64
+    annotationProcessor "com.google.auto.value:auto-value:$AUTO_VALUE_VERSION"
+    annotationProcessor 'com.ryanharter.auto.value:auto-value-parcel:0.2.3-rc2'
+    annotationProcessor 'com.ryanharter.auto.value:auto-value-gson:0.3.2-rc1'
+    annotationProcessor 'com.squareup:javapoet:1.7.0'
+    // https://github.com/rharter/auto-value-parcel/issues/64
 
     compile  "com.google.dagger:dagger:$DAGGER_VERSION"
     provided 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
