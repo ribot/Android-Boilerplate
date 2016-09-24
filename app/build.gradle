@@ -78,16 +78,17 @@ play {
 }
 
 dependencies {
-    final PLAY_SERVICES_VERSION = '9.2.0'
-    final SUPPORT_LIBRARY_VERSION = '24.0.0'
+    final PLAY_SERVICES_VERSION = '9.6.1'
+    final SUPPORT_LIBRARY_VERSION = '24.2.1'
     final RETROFIT_VERSION = '2.1.0'
     final DAGGER_VERSION = '2.5'
     final DEXMAKER_VERSION = '1.4'
     final HAMCREST_VERSION = '1.3'
     final ESPRESSO_VERSION = '2.2.1'
     final RUNNER_VERSION = '0.4'
-    final BUTTERKNIFE_VERSION = '8.1.0'
-    final AUTO_VALUE_VERSION = '1.2'
+    final BUTTERKNIFE_VERSION = '8.4.0'
+    final AUTO_VALUE_VERSION = '1.3'
+    final AUTO_GSON_VALUE_VERSION = '0.4.2'
 
     def daggerCompiler = "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     def jUnit = "junit:junit:4.12"
@@ -118,10 +119,11 @@ dependencies {
 
     // Replace provided dependency below with official AutoValue once this issue is fixed
     // https://github.com/google/auto/issues/268
-    provided 'com.jakewharton.auto.value:auto-value-annotations:1.2-update1'
+    provided "com.jakewharton.auto.value:auto-value-annotations:$AUTO_VALUE_VERSION"
+    provided "com.ryanharter.auto.value:auto-value-gson:$AUTO_GSON_VALUE_VERSION"
     annotationProcessor "com.google.auto.value:auto-value:$AUTO_VALUE_VERSION"
-    annotationProcessor 'com.ryanharter.auto.value:auto-value-parcel:0.2.3-rc2'
-    annotationProcessor 'com.ryanharter.auto.value:auto-value-gson:0.3.2-rc1'
+    annotationProcessor 'com.ryanharter.auto.value:auto-value-parcel:0.2.4-rc2'
+    annotationProcessor "com.ryanharter.auto.value:auto-value-gson:$AUTO_GSON_VALUE_VERSION"
     annotationProcessor 'com.squareup:javapoet:1.7.0'
     // https://github.com/rharter/auto-value-parcel/issues/64
 
