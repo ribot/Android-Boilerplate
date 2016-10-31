@@ -51,11 +51,6 @@
 -dontwarn sun.misc.Unsafe
 -keep class rx.internal.util.unsafe.** { *; }
 
-# EasyAdapter rules
--keepclassmembers class * extends uk.co.ribot.easyadapter.ItemViewHolder {
-    public <init>(...);
- }
-
 # Gson rules
 -keepattributes Signature
 -keep class sun.misc.Unsafe { *; }
