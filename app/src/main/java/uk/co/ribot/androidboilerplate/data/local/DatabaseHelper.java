@@ -25,8 +25,8 @@ public class DatabaseHelper {
 
     @Inject
     public DatabaseHelper(DbOpenHelper dbOpenHelper) {
-        SqlBrite sqlBrite = (new SqlBrite.Builder()).build();
-        mDb = sqlBrite.wrapDatabaseHelper(dbOpenHelper, Schedulers.io());
+        SqlBrite.Builder briteBuilder = new SqlBrite.Builder();
+        mDb = briteBuilder.build().wrapDatabaseHelper(dbOpenHelper, Schedulers.immediate());
     }
 
     public BriteDatabase getBriteDb() {
