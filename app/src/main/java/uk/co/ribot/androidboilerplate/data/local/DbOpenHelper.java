@@ -5,9 +5,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import uk.co.ribot.androidboilerplate.injection.ApplicationContext;
 
+@Singleton
 public class DbOpenHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "ribots.db";

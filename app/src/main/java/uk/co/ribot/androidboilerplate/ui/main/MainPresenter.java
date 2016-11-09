@@ -13,6 +13,7 @@ import uk.co.ribot.androidboilerplate.data.DataManager;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
 import uk.co.ribot.androidboilerplate.injection.ConfigPersistent;
 import uk.co.ribot.androidboilerplate.ui.base.BasePresenter;
+import uk.co.ribot.androidboilerplate.util.RxUtil;
 
 @ConfigPersistent
 public class MainPresenter extends BasePresenter<MainMvpView> {
@@ -38,6 +39,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
 
     public void loadRibots() {
         checkViewAttached();
+        RxUtil.unsubscribe(mSubscription);
         mSubscription = mDataManager.getRibots()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
