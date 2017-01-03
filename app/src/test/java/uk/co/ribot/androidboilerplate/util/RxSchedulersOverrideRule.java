@@ -19,19 +19,7 @@ import rx.schedulers.Schedulers;
  */
 public class RxSchedulersOverrideRule implements TestRule {
 
-    private final RxJavaSchedulersHook mRxJavaSchedulersHook = new RxJavaSchedulersHook() {
-        @Override
-        public Scheduler getIOScheduler() {
-            return Schedulers.immediate();
-        }
-
-        @Override
-        public Scheduler getNewThreadScheduler() {
-            return Schedulers.immediate();
-        }
-    };
-
-    private final RxAndroidSchedulersHook mRxAndroidSchedulersHook = new RxAndroidSchedulersHook() {
+     private final RxAndroidSchedulersHook mRxAndroidSchedulersHook = new RxAndroidSchedulersHook() {
         @Override
         public Scheduler getMainThreadScheduler() {
             return Schedulers.immediate();
@@ -46,13 +34,14 @@ public class RxSchedulersOverrideRule implements TestRule {
                 RxAndroidPlugins.getInstance().reset();
                 RxAndroidPlugins.getInstance().registerSchedulersHook(mRxAndroidSchedulersHook);
 
-                RxJavaPlugins.getInstance().reset();
-                RxJavaPlugins.getInstance().registerSchedulersHook(mRxJavaSchedulersHook);
+                RxJavaHooks.reset();
+                RxJavaHooks.onIOScheduler(Schedulers.immediate());
+                RxJavaHooks.onNewThreadScheduler(Schedulers.immediate());
 
                 base.evaluate();
 
                 RxAndroidPlugins.getInstance().reset();
-                RxJavaPlugins.getInstance().reset();
+                RxJavaHooks.reset();
             }
         };
     }
