@@ -82,7 +82,6 @@ dependencies {
     final SUPPORT_LIBRARY_VERSION = '24.2.1'
     final RETROFIT_VERSION = '2.1.0'
     final DAGGER_VERSION = '2.5'
-    final DEXMAKER_VERSION = '1.4'
     final HAMCREST_VERSION = '1.3'
     final ESPRESSO_VERSION = '2.2.1'
     final RUNNER_VERSION = '0.4'
@@ -147,9 +146,6 @@ dependencies {
     androidTestCompile "com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION"
     androidTestCompile "com.android.support.test:runner:$RUNNER_VERSION"
     androidTestCompile "com.android.support.test:rules:$RUNNER_VERSION"
-    androidTestCompile "com.crittercism.dexmaker:dexmaker:$DEXMAKER_VERSION"
-    androidTestCompile "com.crittercism.dexmaker:dexmaker-dx:$DEXMAKER_VERSION"
-    androidTestCompile "com.crittercism.dexmaker:dexmaker-mockito:$DEXMAKER_VERSION"
 
     // Unit tests dependencies
     testCompile jUnit
