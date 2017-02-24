@@ -142,6 +142,11 @@ To quickly start a new project from this boilerplate follow the next steps:
 * Update README with information relevant to the new project.
 * Update LICENSE to match the requirements of the new project.
 
+## Contributing or Issues
+It would be good to have a flow for contributing or creating issues since issues aren't available on this fork.
+
+FYI https://api.ribot.io/ is down, nginx 503 response.
+
 ## License
 
 ```
