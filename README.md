@@ -145,7 +145,7 @@ To quickly start a new project from this boilerplate follow the next steps:
 ## License
 
 ```
-    Copyright 2015 Ribot Ltd.
+    Copyright 2016 Ribot Ltd.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
