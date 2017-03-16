@@ -15,6 +15,7 @@ import javax.inject.Singleton;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
 
 @Singleton
@@ -24,7 +25,8 @@ public class DatabaseHelper {
 
     @Inject
     public DatabaseHelper(DbOpenHelper dbOpenHelper) {
-        mDb = SqlBrite.create().wrapDatabaseHelper(dbOpenHelper);
+        SqlBrite.Builder briteBuilder = new SqlBrite.Builder();
+        mDb = briteBuilder.build().wrapDatabaseHelper(dbOpenHelper, Schedulers.immediate());
     }
 
     public BriteDatabase getBriteDb() {

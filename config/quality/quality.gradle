@@ -15,7 +15,7 @@ apply plugin: 'findbugs'
 apply plugin: 'pmd'
 
 dependencies {
-    checkstyle 'com.puppycrawl.tools:checkstyle:6.5'
+    checkstyle 'com.puppycrawl.tools:checkstyle:6.11.1'
 }
 
 def qualityConfigDir = "$project.rootDir/config/quality";

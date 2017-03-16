@@ -3,8 +3,6 @@ package uk.co.ribot.androidboilerplate.runner;
 import android.os.Bundle;
 import android.support.test.espresso.Espresso;
 
-import rx.plugins.RxJavaPlugins;
-import uk.co.ribot.androidboilerplate.util.RxIdlingExecutionHook;
 import uk.co.ribot.androidboilerplate.util.RxIdlingResource;
 
 /**
@@ -19,8 +17,7 @@ public class RxAndroidJUnitRunner extends UnlockDeviceAndroidJUnitRunner {
     public void onCreate(Bundle arguments) {
         super.onCreate(arguments);
         RxIdlingResource rxIdlingResource = new RxIdlingResource();
-        RxJavaPlugins.getInstance()
-                .registerObservableExecutionHook(new RxIdlingExecutionHook(rxIdlingResource));
         Espresso.registerIdlingResources(rxIdlingResource);
     }
+
 }
