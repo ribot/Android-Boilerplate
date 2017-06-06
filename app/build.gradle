@@ -18,6 +18,10 @@ android {
         versionName '0.1.0'
     }
 
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
     signingConfigs {
         // You must set up an environment var before release signing
         // Run: export APP_KEY={password}
