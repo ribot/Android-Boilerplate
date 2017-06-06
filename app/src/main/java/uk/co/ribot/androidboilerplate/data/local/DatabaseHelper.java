@@ -3,8 +3,8 @@ package uk.co.ribot.androidboilerplate.data.local;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.squareup.sqlbrite.BriteDatabase;
-import com.squareup.sqlbrite.SqlBrite;
+import com.squareup.sqlbrite2.BriteDatabase;
+import com.squareup.sqlbrite2.SqlBrite;
 
 import java.util.Collection;
 import java.util.List;
@@ -12,12 +12,12 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
 
 @Singleton
@@ -28,7 +28,7 @@ public class DatabaseHelper {
     @Inject
     public DatabaseHelper(DbOpenHelper dbOpenHelper) {
         SqlBrite.Builder briteBuilder = new SqlBrite.Builder();
-        mDb = briteBuilder.build().wrapDatabaseHelper(dbOpenHelper, Schedulers.immediate());
+        mDb = briteBuilder.build().wrapDatabaseHelper(dbOpenHelper, Schedulers.io());
     }
 
     public BriteDatabase getBriteDb() {
@@ -59,16 +59,14 @@ public class DatabaseHelper {
     }
 
     public Observable<List<Ribot>> getRibots() {
-        rx.Observable<List<Ribot>> v1Observable = mDb.createQuery(Db.RibotProfileTable.TABLE_NAME,
+        return mDb.createQuery(Db.RibotProfileTable.TABLE_NAME,
                 "SELECT * FROM " + Db.RibotProfileTable.TABLE_NAME)
-                .mapToList(new Func1<Cursor, Ribot>() {
+                .mapToList(new Function<Cursor, Ribot>() {
                     @Override
-                    public Ribot call(Cursor cursor) {
+                    public Ribot apply(@NonNull Cursor cursor) throws Exception {
                         return Ribot.create(Db.RibotProfileTable.parseCursor(cursor));
                     }
                 });
-
-        return RxJavaInterop.toV2Observable(v1Observable);
     }
 
 }
