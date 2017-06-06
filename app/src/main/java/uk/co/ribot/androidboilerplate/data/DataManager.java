@@ -5,8 +5,11 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import rx.Observable;
-import rx.functions.Func1;
+import hu.akarnokd.rxjava.interop.RxJavaInterop;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 import uk.co.ribot.androidboilerplate.data.local.DatabaseHelper;
 import uk.co.ribot.androidboilerplate.data.local.PreferencesHelper;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
@@ -33,16 +36,17 @@ public class DataManager {
 
     public Observable<Ribot> syncRibots() {
         return mRibotsService.getRibots()
-                .concatMap(new Func1<List<Ribot>, Observable<Ribot>>() {
+                .concatMap(new Function<List<Ribot>, ObservableSource<? extends Ribot>>() {
                     @Override
-                    public Observable<Ribot> call(List<Ribot> ribots) {
-                        return mDatabaseHelper.setRibots(ribots);
+                    public ObservableSource<? extends Ribot> apply(@NonNull List<Ribot> ribots)
+                            throws Exception {
+                        return RxJavaInterop.toV2Observable(mDatabaseHelper.setRibots(ribots));
                     }
                 });
     }
 
     public Observable<List<Ribot>> getRibots() {
-        return mDatabaseHelper.getRibots().distinct();
+        return RxJavaInterop.toV2Observable(mDatabaseHelper.getRibots().distinct());
     }
 
 }
