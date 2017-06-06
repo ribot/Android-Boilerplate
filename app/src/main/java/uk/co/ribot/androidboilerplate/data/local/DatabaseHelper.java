@@ -12,8 +12,10 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import rx.Observable;
-import rx.Subscriber;
+import hu.akarnokd.rxjava.interop.RxJavaInterop;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
@@ -34,10 +36,10 @@ public class DatabaseHelper {
     }
 
     public Observable<Ribot> setRibots(final Collection<Ribot> newRibots) {
-        return Observable.create(new Observable.OnSubscribe<Ribot>() {
+        return Observable.create(new ObservableOnSubscribe<Ribot>() {
             @Override
-            public void call(Subscriber<? super Ribot> subscriber) {
-                if (subscriber.isUnsubscribed()) return;
+            public void subscribe(ObservableEmitter<Ribot> emiter) throws Exception {
+                if (emiter.isDisposed()) return;
                 BriteDatabase.Transaction transaction = mDb.newTransaction();
                 try {
                     mDb.delete(Db.RibotProfileTable.TABLE_NAME, null);
@@ -45,10 +47,10 @@ public class DatabaseHelper {
                         long result = mDb.insert(Db.RibotProfileTable.TABLE_NAME,
                                 Db.RibotProfileTable.toContentValues(ribot.profile()),
                                 SQLiteDatabase.CONFLICT_REPLACE);
-                        if (result >= 0) subscriber.onNext(ribot);
+                        if (result >= 0) emiter.onNext(ribot);
                     }
                     transaction.markSuccessful();
-                    subscriber.onCompleted();
+                    emiter.onComplete();
                 } finally {
                     transaction.end();
                 }
@@ -57,7 +59,7 @@ public class DatabaseHelper {
     }
 
     public Observable<List<Ribot>> getRibots() {
-        return mDb.createQuery(Db.RibotProfileTable.TABLE_NAME,
+        rx.Observable<List<Ribot>> v1Observable = mDb.createQuery(Db.RibotProfileTable.TABLE_NAME,
                 "SELECT * FROM " + Db.RibotProfileTable.TABLE_NAME)
                 .mapToList(new Func1<Cursor, Ribot>() {
                     @Override
@@ -65,6 +67,8 @@ public class DatabaseHelper {
                         return Ribot.create(Db.RibotProfileTable.parseCursor(cursor));
                     }
                 });
+
+        return RxJavaInterop.toV2Observable(v1Observable);
     }
 
 }

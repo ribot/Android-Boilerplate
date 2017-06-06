@@ -5,7 +5,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.annotations.NonNull;
@@ -40,13 +39,13 @@ public class DataManager {
                     @Override
                     public ObservableSource<? extends Ribot> apply(@NonNull List<Ribot> ribots)
                             throws Exception {
-                        return RxJavaInterop.toV2Observable(mDatabaseHelper.setRibots(ribots));
+                        return mDatabaseHelper.setRibots(ribots);
                     }
                 });
     }
 
     public Observable<List<Ribot>> getRibots() {
-        return RxJavaInterop.toV2Observable(mDatabaseHelper.getRibots().distinct());
+        return mDatabaseHelper.getRibots().distinct();
     }
 
 }

@@ -12,7 +12,7 @@ import org.robolectric.annotation.Config;
 import java.util.Arrays;
 import java.util.List;
 
-import rx.observers.TestSubscriber;
+import io.reactivex.observers.TestObserver;
 import uk.co.ribot.androidboilerplate.data.local.DatabaseHelper;
 import uk.co.ribot.androidboilerplate.data.local.Db;
 import uk.co.ribot.androidboilerplate.data.local.DbOpenHelper;
@@ -42,10 +42,10 @@ public class DatabaseHelperTest {
         Ribot ribot2 = TestDataFactory.makeRibot("r2");
         List<Ribot> ribots = Arrays.asList(ribot1, ribot2);
 
-        TestSubscriber<Ribot> result = new TestSubscriber<>();
+        TestObserver<Ribot> result = new TestObserver<>();
         mDatabaseHelper.setRibots(ribots).subscribe(result);
         result.assertNoErrors();
-        result.assertReceivedOnNext(ribots);
+        result.assertValueSequence(ribots);
 
         Cursor cursor = mDatabaseHelper.getBriteDb()
                 .query("SELECT * FROM " + Db.RibotProfileTable.TABLE_NAME);
@@ -64,7 +64,7 @@ public class DatabaseHelperTest {
 
         mDatabaseHelper.setRibots(ribots).subscribe();
 
-        TestSubscriber<List<Ribot>> result = new TestSubscriber<>();
+        TestObserver<List<Ribot>> result = new TestObserver<>();
         mDatabaseHelper.getRibots().subscribe(result);
         result.assertNoErrors();
         result.assertValue(ribots);

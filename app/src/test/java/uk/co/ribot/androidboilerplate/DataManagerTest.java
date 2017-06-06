@@ -85,7 +85,7 @@ public class DataManagerTest {
         when(mMockRibotsService.getRibots())
                 .thenReturn(Observable.just(ribots));
         when(mMockDatabaseHelper.setRibots(ribots))
-                .thenReturn(rx.Observable.from(ribots));
+                .thenReturn(Observable.fromIterable(ribots));
     }
 
 }
