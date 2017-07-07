@@ -77,10 +77,6 @@ play {
     track = 'alpha'
 }
 
-repositories {
-    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-}
-
 dependencies {
     final PLAY_SERVICES_VERSION = '9.6.1'
     final SUPPORT_LIBRARY_VERSION = '25.3.1'
@@ -105,7 +101,7 @@ dependencies {
     compile "com.android.support:cardview-v7:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
 
-    compile ("com.squareup.sqlbrite2:sqlbrite:2.0.0-SNAPSHOT") {
+    compile ("com.squareup.sqlbrite2:sqlbrite:2.0.0") {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
