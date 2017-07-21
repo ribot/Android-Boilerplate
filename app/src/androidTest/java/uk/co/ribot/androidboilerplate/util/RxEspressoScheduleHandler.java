@@ -16,7 +16,7 @@ import io.reactivex.functions.Function;
  */
 public class RxEspressoScheduleHandler implements Function<Runnable, Runnable> {
 
-    private final CountingIdlingResource countingIdlingResource =
+    private final CountingIdlingResource mCountingIdlingResource =
             new CountingIdlingResource("rxJava");
 
     @Override
@@ -24,19 +24,19 @@ public class RxEspressoScheduleHandler implements Function<Runnable, Runnable> {
         return new Runnable() {
             @Override
             public void run() {
-                countingIdlingResource.increment();
+                mCountingIdlingResource.increment();
 
                 try {
                     runnable.run();
                 } finally {
-                    countingIdlingResource.decrement();
+                    mCountingIdlingResource.decrement();
                 }
             }
         };
     }
 
     public IdlingResource getIdlingResource() {
-        return countingIdlingResource;
+        return mCountingIdlingResource;
     }
 
 }

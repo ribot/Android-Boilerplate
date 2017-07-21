@@ -13,7 +13,7 @@ import io.reactivex.subjects.PublishSubject;
 @Singleton
 public class RxEventBus {
 
-    private final BackpressureStrategy backpressureStrategy = BackpressureStrategy.BUFFER;
+    private final BackpressureStrategy mBackpressureStrategy = BackpressureStrategy.BUFFER;
     private final PublishSubject<Object> mBusSubject;
 
     @Inject
@@ -32,7 +32,7 @@ public class RxEventBus {
      * Observable that will emmit everything posted to the event bus.
      */
     public Flowable<Object> observable() {
-        return mBusSubject.toFlowable(backpressureStrategy);
+        return mBusSubject.toFlowable(mBackpressureStrategy);
     }
 
     /**
@@ -40,7 +40,7 @@ public class RxEventBus {
      * Use this if you only want to subscribe to one type of events.
      */
     public <T> Flowable<T> filteredObservable(final Class<T> eventClass) {
-        return mBusSubject.ofType(eventClass).toFlowable(backpressureStrategy);
+        return mBusSubject.ofType(eventClass).toFlowable(mBackpressureStrategy);
     }
 
 }
