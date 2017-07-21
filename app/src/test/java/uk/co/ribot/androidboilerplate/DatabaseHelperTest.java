@@ -2,6 +2,7 @@ package uk.co.ribot.androidboilerplate;
 
 import android.database.Cursor;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,11 +31,17 @@ import static junit.framework.Assert.assertEquals;
 @Config(constants = BuildConfig.class, sdk = DefaultConfig.EMULATE_SDK)
 public class DatabaseHelperTest {
 
-    private final DatabaseHelper mDatabaseHelper =
-            new DatabaseHelper(new DbOpenHelper(RuntimeEnvironment.application));
-
     @Rule
     public final RxSchedulersOverrideRule mOverrideSchedulersRule = new RxSchedulersOverrideRule();
+
+    private DatabaseHelper mDatabaseHelper;
+
+    @Before
+    public void setup() {
+        if (mDatabaseHelper == null)
+            mDatabaseHelper = new DatabaseHelper(new DbOpenHelper(RuntimeEnvironment.application),
+                    mOverrideSchedulersRule.getScheduler());
+    }
 
     @Test
     public void setRibots() {
