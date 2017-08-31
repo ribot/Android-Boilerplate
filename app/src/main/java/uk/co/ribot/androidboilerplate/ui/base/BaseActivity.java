@@ -3,6 +3,7 @@ package uk.co.ribot.androidboilerplate.ui.base;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
@@ -35,7 +36,7 @@ public class BaseActivity extends AppCompatActivity {
         // Create the ActivityComponent and reuses cached ConfigPersistentComponent if this is
         // being called after a configuration change.
         mActivityId = savedInstanceState != null ?
-                savedInstanceState.getLong(KEY_ACTIVITY_ID) : NEXT_ID.getAndIncrement();
+                      savedInstanceState.getLong(KEY_ACTIVITY_ID) : NEXT_ID.getAndIncrement();
         ConfigPersistentComponent configPersistentComponent;
         if (!sComponentsMap.containsKey(mActivityId)) {
             Timber.i("Creating new ConfigPersistentComponent id=%d", mActivityId);
@@ -48,6 +49,15 @@ public class BaseActivity extends AppCompatActivity {
             configPersistentComponent = sComponentsMap.get(mActivityId);
         }
         mActivityComponent = configPersistentComponent.activityComponent(new ActivityModule(this));
+
+        final UncaughtExceptionHandler exceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
+        Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                sComponentsMap.remove(mActivityId);
+                exceptionHandler.uncaughtException(thread, throwable);
+            }
+        });
     }
 
     @Override

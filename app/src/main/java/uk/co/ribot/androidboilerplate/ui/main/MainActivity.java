@@ -56,6 +56,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         if (getIntent().getBooleanExtra(EXTRA_TRIGGER_SYNC_FLAG, true)) {
             startService(SyncService.getStartIntent(this));
         }
+
     }
 
     @Override
