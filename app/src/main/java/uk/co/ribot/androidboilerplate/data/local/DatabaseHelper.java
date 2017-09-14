@@ -45,8 +45,8 @@ public class DatabaseHelper {
     public Observable<Ribot> setRibots(final Collection<Ribot> newRibots) {
         return Observable.create(new ObservableOnSubscribe<Ribot>() {
             @Override
-            public void subscribe(ObservableEmitter<Ribot> emiter) throws Exception {
-                if (emiter.isDisposed()) return;
+            public void subscribe(ObservableEmitter<Ribot> emitter) throws Exception {
+                if (emitter.isDisposed()) return;
                 BriteDatabase.Transaction transaction = mDb.newTransaction();
                 try {
                     mDb.delete(Db.RibotProfileTable.TABLE_NAME, null);
@@ -54,10 +54,10 @@ public class DatabaseHelper {
                         long result = mDb.insert(Db.RibotProfileTable.TABLE_NAME,
                                 Db.RibotProfileTable.toContentValues(ribot.profile()),
                                 SQLiteDatabase.CONFLICT_REPLACE);
-                        if (result >= 0) emiter.onNext(ribot);
+                        if (result >= 0) emitter.onNext(ribot);
                     }
                     transaction.markSuccessful();
-                    emiter.onComplete();
+                    emitter.onComplete();
                 } finally {
                     transaction.end();
                 }
