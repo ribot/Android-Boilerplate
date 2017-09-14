@@ -22,7 +22,8 @@ public class BaseActivity extends AppCompatActivity {
 
     private static final String KEY_ACTIVITY_ID = "KEY_ACTIVITY_ID";
     private static final AtomicLong NEXT_ID = new AtomicLong(0);
-    private static final LongSparseArray<ConfigPersistentComponent> sComponentsMap = new LongSparseArray<>();
+    private static final LongSparseArray<ConfigPersistentComponent>
+            sComponentsMap = new LongSparseArray<>();
 
     private ActivityComponent mActivityComponent;
     private long mActivityId;
@@ -33,7 +34,9 @@ public class BaseActivity extends AppCompatActivity {
 
         // Create the ActivityComponent and reuses cached ConfigPersistentComponent if this is
         // being called after a configuration change.
-        mActivityId = savedInstanceState != null ? savedInstanceState.getLong(KEY_ACTIVITY_ID) : NEXT_ID.getAndIncrement();
+        mActivityId = savedInstanceState != null ?
+                savedInstanceState.getLong(KEY_ACTIVITY_ID) : NEXT_ID.getAndIncrement();
+
         ConfigPersistentComponent configPersistentComponent = sComponentsMap.get(mActivityId, null);
 
         if (configPersistentComponent == null) {
@@ -48,8 +51,8 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putLong(KEY_ACTIVITY_ID, mActivityId);
         super.onSaveInstanceState(outState);
+        outState.putLong(KEY_ACTIVITY_ID, mActivityId);
     }
 
     @Override
