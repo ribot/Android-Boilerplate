@@ -2,6 +2,7 @@ package uk.co.ribot.androidboilerplate;
 
 import android.database.Cursor;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +13,7 @@ import org.robolectric.annotation.Config;
 import java.util.Arrays;
 import java.util.List;
 
-import rx.observers.TestSubscriber;
+import io.reactivex.observers.TestObserver;
 import uk.co.ribot.androidboilerplate.data.local.DatabaseHelper;
 import uk.co.ribot.androidboilerplate.data.local.Db;
 import uk.co.ribot.androidboilerplate.data.local.DbOpenHelper;
@@ -30,11 +31,17 @@ import static junit.framework.Assert.assertEquals;
 @Config(constants = BuildConfig.class, sdk = DefaultConfig.EMULATE_SDK)
 public class DatabaseHelperTest {
 
-    private final DatabaseHelper mDatabaseHelper =
-            new DatabaseHelper(new DbOpenHelper(RuntimeEnvironment.application));
-
     @Rule
     public final RxSchedulersOverrideRule mOverrideSchedulersRule = new RxSchedulersOverrideRule();
+
+    private DatabaseHelper mDatabaseHelper;
+
+    @Before
+    public void setup() {
+        if (mDatabaseHelper == null)
+            mDatabaseHelper = new DatabaseHelper(new DbOpenHelper(RuntimeEnvironment.application),
+                    mOverrideSchedulersRule.getScheduler());
+    }
 
     @Test
     public void setRibots() {
@@ -42,10 +49,10 @@ public class DatabaseHelperTest {
         Ribot ribot2 = TestDataFactory.makeRibot("r2");
         List<Ribot> ribots = Arrays.asList(ribot1, ribot2);
 
-        TestSubscriber<Ribot> result = new TestSubscriber<>();
+        TestObserver<Ribot> result = new TestObserver<>();
         mDatabaseHelper.setRibots(ribots).subscribe(result);
         result.assertNoErrors();
-        result.assertReceivedOnNext(ribots);
+        result.assertValueSequence(ribots);
 
         Cursor cursor = mDatabaseHelper.getBriteDb()
                 .query("SELECT * FROM " + Db.RibotProfileTable.TABLE_NAME);
@@ -64,7 +71,7 @@ public class DatabaseHelperTest {
 
         mDatabaseHelper.setRibots(ribots).subscribe();
 
-        TestSubscriber<List<Ribot>> result = new TestSubscriber<>();
+        TestObserver<List<Ribot>> result = new TestObserver<>();
         mDatabaseHelper.getRibots().subscribe(result);
         result.assertNoErrors();
         result.assertValue(ribots);

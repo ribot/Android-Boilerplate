@@ -9,9 +9,10 @@ import android.os.IBinder;
 
 import javax.inject.Inject;
 
-import rx.Observer;
-import rx.Subscription;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 import uk.co.ribot.androidboilerplate.BoilerplateApplication;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
@@ -22,7 +23,7 @@ import uk.co.ribot.androidboilerplate.util.RxUtil;
 public class SyncService extends Service {
 
     @Inject DataManager mDataManager;
-    private Subscription mSubscription;
+    private Disposable mDisposable;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, SyncService.class);
@@ -49,25 +50,29 @@ public class SyncService extends Service {
             return START_NOT_STICKY;
         }
 
-        RxUtil.unsubscribe(mSubscription);
-        mSubscription = mDataManager.syncRibots()
+        RxUtil.dispose(mDisposable);
+        mDataManager.syncRibots()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Ribot>() {
                     @Override
-                    public void onCompleted() {
-                        Timber.i("Synced successfully!");
-                        stopSelf(startId);
+                    public void onSubscribe(@NonNull Disposable d) {
+                        mDisposable = d;
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onNext(@NonNull Ribot ribot) {
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
                         Timber.w(e, "Error syncing.");
                         stopSelf(startId);
-
                     }
 
                     @Override
-                    public void onNext(Ribot ribot) {
+                    public void onComplete() {
+                        Timber.i("Synced successfully!");
+                        stopSelf(startId);
                     }
                 });
 
@@ -76,7 +81,7 @@ public class SyncService extends Service {
 
     @Override
     public void onDestroy() {
-        if (mSubscription != null) mSubscription.unsubscribe();
+        if (mDisposable != null) mDisposable.dispose();
         super.onDestroy();
     }
 

@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
 import uk.co.ribot.androidboilerplate.data.model.Ribot;
 import uk.co.ribot.androidboilerplate.test.common.TestComponentRule;
 import uk.co.ribot.androidboilerplate.test.common.TestDataFactory;

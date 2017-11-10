@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import rx.observers.TestSubscriber;
+import io.reactivex.subscribers.TestSubscriber;
 
 public class RxEventBusTest {
 
