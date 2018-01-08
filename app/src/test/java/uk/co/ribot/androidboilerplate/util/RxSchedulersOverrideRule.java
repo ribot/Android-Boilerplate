@@ -3,34 +3,37 @@ package uk.co.ribot.androidboilerplate.util;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+import java.util.concurrent.Callable;
 
-import rx.Scheduler;
-import rx.android.plugins.RxAndroidPlugins;
-import rx.android.plugins.RxAndroidSchedulersHook;
-import rx.functions.Func1;
-import rx.plugins.RxJavaHooks;
-import rx.schedulers.Schedulers;
+import io.reactivex.Scheduler;
+import io.reactivex.android.plugins.RxAndroidPlugins;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
+import io.reactivex.plugins.RxJavaPlugins;
+import io.reactivex.schedulers.Schedulers;
 
 /**
- * This rule registers SchedulerHooks for RxJava and RxAndroid to ensure that subscriptions
- * always subscribeOn and observeOn Schedulers.immediate().
+ * This rule registers Handlers for RxJava and RxAndroid to ensure that subscriptions
+ * always subscribeOn and observeOn Schedulers.trampoline().
  * Warning, this rule will reset RxAndroidPlugins and RxJavaPlugins before and after each test so
  * if the application code uses RxJava plugins this may affect the behaviour of the testing method.
  */
 public class RxSchedulersOverrideRule implements TestRule {
 
-    private final RxAndroidSchedulersHook mRxAndroidSchedulersHook = new RxAndroidSchedulersHook() {
-        @Override
-        public Scheduler getMainThreadScheduler() {
-            return Schedulers.immediate();
-        }
-    };
-
-    private final Func1<Scheduler, Scheduler> mRxJavaImmediateScheduler =
-            new Func1<Scheduler, Scheduler>() {
+    private final Function<Callable<Scheduler>, Scheduler> mRxAndroidSchedulersHook =
+            new Function<Callable<Scheduler>, Scheduler>() {
                 @Override
-                public Scheduler call(Scheduler scheduler) {
-                    return Schedulers.immediate();
+                public Scheduler apply(@NonNull Callable<Scheduler> schedulerCallable)
+                        throws Exception {
+                    return getScheduler();
+                }
+            };
+
+    private final Function<Scheduler, Scheduler> mRxJavaImmediateScheduler =
+            new Function<Scheduler, Scheduler>() {
+                @Override
+                public Scheduler apply(@NonNull Scheduler scheduler) throws Exception {
+                    return getScheduler();
                 }
             };
 
@@ -39,18 +42,23 @@ public class RxSchedulersOverrideRule implements TestRule {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                RxAndroidPlugins.getInstance().reset();
-                RxAndroidPlugins.getInstance().registerSchedulersHook(mRxAndroidSchedulersHook);
+                RxAndroidPlugins.reset();
+                RxAndroidPlugins.setInitMainThreadSchedulerHandler(mRxAndroidSchedulersHook);
 
-                RxJavaHooks.reset();
-                RxJavaHooks.setOnIOScheduler(mRxJavaImmediateScheduler);
-                RxJavaHooks.setOnNewThreadScheduler(mRxJavaImmediateScheduler);
+                RxJavaPlugins.reset();
+                RxJavaPlugins.setIoSchedulerHandler(mRxJavaImmediateScheduler);
+                RxJavaPlugins.setNewThreadSchedulerHandler(mRxJavaImmediateScheduler);
 
                 base.evaluate();
 
-                RxAndroidPlugins.getInstance().reset();
-                RxJavaHooks.reset();
+                RxAndroidPlugins.reset();
+                RxJavaPlugins.reset();
             }
         };
     }
+
+    public Scheduler getScheduler() {
+        return Schedulers.trampoline();
+    }
+
 }
