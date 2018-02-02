@@ -5,13 +5,13 @@ apply plugin: 'com.github.triplet.play'
 //apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.3'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId 'uk.co.ribot.androidboilerplate'
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 27
         testInstrumentationRunner "${applicationId}.runner.RxAndroidJUnitRunner"
         versionCode 1000
         // Major -> Millions, Minor -> Thousands, Bugfix -> Hundreds. E.g 1.3.72 == 1,003,072
@@ -78,18 +78,17 @@ play {
 }
 
 dependencies {
-    final PLAY_SERVICES_VERSION = '9.6.1'
-    final SUPPORT_LIBRARY_VERSION = '25.3.1'
+    final PLAY_SERVICES_VERSION = '11.6.2'
+    final SUPPORT_LIBRARY_VERSION = '27.0.2'
     final RETROFIT_VERSION = '2.3.0'
     final DAGGER_VERSION = '2.5'
     final MOCKITO_VERSION = '2.6.2'
     final HAMCREST_VERSION = '1.3'
     final ESPRESSO_VERSION = '2.2.1'
     final RUNNER_VERSION = '0.4'
-    final BUTTERKNIFE_VERSION = '8.4.0'
-    final AUTO_VALUE_VERSION = '1.3'
-    final AUTO_VALUE_GSON_VERSION = '0.4.2'
-
+    final BUTTERKNIFE_VERSION = '8.8.1'
+    final AUTO_VALUE_VERSION = '1.5'
+    final AUTO_VALUE_GSON_VERSION = '0.7.0'
     def daggerCompiler = "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     def jUnit = "junit:junit:4.12"
     def mockito = "org.mockito:mockito-core:$MOCKITO_VERSION"
@@ -97,40 +96,43 @@ dependencies {
     // App Dependencies
     compile "com.google.android.gms:play-services-gcm:$PLAY_SERVICES_VERSION"
     compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
+    compile "com.android.support:support-v4:$SUPPORT_LIBRARY_VERSION"
+    compile "com.android.support:support-media-compat:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:cardview-v7:$SUPPORT_LIBRARY_VERSION"
     compile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
-
-    compile ("com.squareup.sqlbrite2:sqlbrite:2.0.0") {
+    compile('com.squareup.sqlbrite2:sqlbrite:2.0.0') {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION"
-
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.7@aar') {
         transitive = true;
     }
-
     compile 'com.jakewharton.timber:timber:4.1.2'
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
 
     // Replace provided dependency below with official AutoValue once this issue is fixed
+
     // https://github.com/google/auto/issues/268
     provided "com.jakewharton.auto.value:auto-value-annotations:$AUTO_VALUE_VERSION"
     provided "com.ryanharter.auto.value:auto-value-gson:$AUTO_VALUE_GSON_VERSION"
     annotationProcessor "com.google.auto.value:auto-value:$AUTO_VALUE_VERSION"
+    compileOnly 'com.google.auto.value:auto-value:1.5'
     annotationProcessor 'com.ryanharter.auto.value:auto-value-parcel:0.2.4-rc2'
     annotationProcessor "com.ryanharter.auto.value:auto-value-gson:$AUTO_VALUE_GSON_VERSION"
     annotationProcessor 'com.squareup:javapoet:1.7.0'
-    // https://github.com/rharter/auto-value-parcel/issues/64
 
-    compile  "com.google.dagger:dagger:$DAGGER_VERSION"
-    provided 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
+    // https://github.com/rharter/auto-value-parcel/issues/64
+    compile "com.google.dagger:dagger:$DAGGER_VERSION"
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+
+    //Required by Dagger2
     annotationProcessor daggerCompiler
     testAnnotationProcessor daggerCompiler
     androidTestAnnotationProcessor daggerCompiler
