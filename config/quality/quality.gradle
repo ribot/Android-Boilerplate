@@ -31,7 +31,7 @@ task checkstyle(type: Checkstyle, group: 'Verification', description: 'Runs code
     reports {
         xml.enabled = true
         xml {
-            destination "$reportsDir/checkstyle/checkstyle.xml"
+            destination file("$reportsDir/checkstyle/checkstyle.xml")
         }
     }
 
@@ -57,10 +57,10 @@ task findbugs(type: FindBugs,
         xml.enabled = true
         html.enabled = false
         xml {
-            destination "$reportsDir/findbugs/findbugs.xml"
+            destination file("$reportsDir/findbugs/findbugs.xml")
         }
         html {
-            destination "$reportsDir/findbugs/findbugs.html"
+            destination file("$reportsDir/findbugs/findbugs.html")
         }
     }
 
@@ -81,10 +81,10 @@ task pmd(type: Pmd, group: 'Verification', description: 'Inspect sourcecode for 
         xml.enabled = true
         html.enabled = true
         xml {
-            destination "$reportsDir/pmd/pmd.xml"
+            destination file("$reportsDir/pmd/pmd.xml")
         }
         html {
-            destination "$reportsDir/pmd/pmd.html"
+            destination file("$reportsDir/pmd/pmd.html")
         }
     }
 }
