@@ -1,11 +1,12 @@
 buildscript {
     repositories {
         jcenter()
+        google()
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.2'
-        classpath 'com.github.triplet.gradle:play-publisher:1.1.4'
+        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.github.triplet.gradle:play-publisher:1.2.0'
         //noinspection GradleDynamicVersion
         classpath 'io.fabric.tools:gradle:1.+'
     }
@@ -14,11 +15,12 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        google()
         maven { url 'https://maven.fabric.io/public' }
     }
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.3'
+    gradleVersion = '4.1'
     distributionUrl = distributionUrl.replace("bin", "all")
 }
